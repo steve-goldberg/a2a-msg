@@ -38,7 +38,7 @@ HANDOFF.md probes/ evidence/   the research handoff, probe code and evidence it 
 
 ## Status
 
-Built and verified live on 2026-10-03 (Claude Code 2.1.288, Pi 1.0.0): Pi→Pi, Claude→Pi and Pi→Claude, idle and mid-turn, plus the registry lifecycle, crash cleanup, name collisions and the nested-process guard. See `SMOKES.md` S19–S30. Still open: the global install, retiring the old `hdr` MCP (D5), and the optional test of Claude's native inbox (D6).
+Built and verified live on 2026-10-03 (Claude Code 2.1.288, Pi 1.0.0): Pi→Pi, Claude→Pi and Pi→Claude, idle and mid-turn, plus the registry lifecycle, crash cleanup, name collisions and the nested-process guard. See `SMOKES.md` S19–S30. Decided on 2026-10-03: the global install waits (use `--plugin-dir` / `pi -e`), the old `hdr` MCP stays for now (D5), and the native-inbox test is skipped (D6).
 
 ## Install
 

@@ -47,4 +47,4 @@ pi -ne -e "$PWD/pi/a2a-msg/index.ts"
 - **Node clients use `agent: false`.** Keep-alive reuse gets `EPIPE` after a peer restarts.
 - **Pi:** `pasteToEditor` doesn't redraw; follow it with `ctx.ui.setStatus("a2a-msg", undefined)`. A stored Claude plugin prompt is prefixed "The a2a-msg plugin sent a message:".
 - **Live tests:** only in your own Herdr workspace (`herdr tab create --workspace "${HERDR_PANE_ID%%:*}"`). Read a pane before typing; the person may be using it. Never read `~/.claude/sessions/*`. Clean up tabs, processes and `~/.local/state/a2a-msg` leftovers.
-- **Global config** (`CLAUDE_CODE_PLUGIN_DIRS`, `pi install`, the `hdr` MCP) changes only with the user's approval.
+- **Global config** (`CLAUDE_CODE_PLUGIN_DIRS`, `pi install`, the `hdr` MCP) changes only with the user's approval. As of 2026-10-03: not installed, `hdr` MCP kept (D5), native-inbox test skipped (D6), mid-turn stays read-now.

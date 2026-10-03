@@ -225,8 +225,10 @@ pi/a2a-msg/
 - **D2. Claude↔Claude: native.** The user said Claude to Claude already works well inside Herdr, so the scope is Claude→Pi, Pi→Claude and Pi→Pi. Claude's `/msg` and `session.send` handle Pi peers only; any other recipient goes to `next(e)`.
 - **D3. Pi `@` completion: on, Pi peers only.** "If I'm in a Pi pane and use @, I'm messaging Pi; in a Claude session @ messages Claude. /msg is when I want the bridge and the bridge only." So Pi's `/msg` lists Claude peers only.
 - **D4. Registry folder: `~/.local/state/a2a-msg/<ws>/`**, with an `A2A_MSG_DIR` override that the tests use. It is keyed by workspace and pane, not by project folder, so renaming a project doesn't affect it.
-- **D5. Retiring `hdr-mcp` (open, ask the user):** a user-scope Claude MCP `hdr` (`http://127.0.0.1:8765/mcp`) is still configured. The global Pi config doesn't load the old hdr Pi extension; `~/.pi/agent/extensions/herdr-agent-state.ts` is a different one. Project `.mcp.json` / `.pi/mcp.json` entries weren't searched.
-- **D6. Claude native inbox spike (open, optional):** not done. It needs the user watching the pane.
+- **D5. Retiring `hdr-mcp`: keep for now** (user, 2026-10-03). The user-scope Claude MCP `hdr` (`http://127.0.0.1:8765/mcp`) stays alongside a2a-msg; to remove it later, run `claude mcp remove hdr -s user`. The global Pi config doesn't load the old hdr Pi extension.
+- **D6. Claude native inbox spike: skipped** (user, 2026-10-03). The Node inbox helper stays. Revisit if Claude Code documents the inbox frame format.
+- **Mid-turn delivery in Claude: read now** (user, 2026-10-03). Claude reads the message in the running turn, and the one-line `↘` row stays unexpandable; the alternative of queueing it as a prompt after the turn was declined.
+- **Install: not yet** (user, 2026-10-03). Use `--plugin-dir` / `pi -e` until the user approves the global changes in `README.md`.
 
 ## 9. Where the build differs from §2–§7
 - **Shared code:** `claude/a2a-msg/hooks/core.ts` (pure) and `claude/a2a-msg/inbox.ts` (the Node HTTP inbox) are used by all three: the Claude mod, its helper (`node inbox.ts <sock> <kind> <pane>`, not `inbox.mjs`), and the Pi extension (by relative import; Pi loads local packages in place). Pi's inbox and Claude's helper are the same code.

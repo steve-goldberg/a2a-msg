@@ -1,6 +1,6 @@
 # Handoff: build a2a-msg (Claude mod + Pi extension)
 
-> **Built 2026-10-03** by `a2a-msg-build1`. See `README.md` (use, install, tests), `SPEC.md` §8–§9 (decisions, how the build differs) and `SMOKES.md` S19–S30 (live checks). Still open: install (global config), D5, D6, `git init`.
+> **Built 2026-10-03** by `a2a-msg-build1`. See `README.md` (use, install, tests), `SPEC.md` §8–§9 (decisions, how the build differs) and `SMOKES.md` S19–S30 (live checks). Decisions since: install deferred, D5 keep `hdr` MCP, D6 skipped (SPEC.md §8).
 
 **From:** session `claudemods` (hdr-mcp research), 2026-10-03.
 **To:** `a2a-msg-build1`.
