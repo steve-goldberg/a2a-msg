@@ -1,0 +1,5 @@
+{
+  "name": "a2a-msg-view",
+  "version": "0.1.0",
+  "description": "Shows a2a-msg's incoming peer messages as one compact line; ctrl+o shows the whole message"
+}

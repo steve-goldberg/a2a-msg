@@ -1,0 +1,5 @@
+hub up
+{"error":{"code":"pane_not_found","message":"pane w9:p2 not found"},"id":"cli:pane:get"}
+{"error":{"code":"pane_not_found","message":"pane w9:p1 not found"},"id":"cli:pane:get"}
+{"error":{"code":"pane_not_found","message":"pane w9:p2 not found"},"id":"cli:pane:get"}
+{"error":{"code":"pane_not_found","message":"pane w9:p2 not found"},"id":"cli:pane:get"}

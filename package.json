@@ -1,0 +1,15 @@
+{
+  "name": "a2a-msg-repo",
+  "private": true,
+  "type": "module",
+  "description": "Peer messaging between Pi and Claude Code sessions in one Herdr workspace",
+  "scripts": {
+    "test": "node --import ./test/pi-host.mjs --test test/ pi/a2a-msg/",
+    "typecheck": "tsc -p .",
+    "link-pi": "scripts/link-pi.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "typescript": "^5.9.3"
+  }
+}

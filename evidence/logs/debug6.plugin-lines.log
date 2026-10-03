@@ -1,0 +1,97 @@
+2026-10-03T11:12:36.595Z [DEBUG] Checking plugin hdr-probe2: skillsPath=none, skillsPaths=0 paths
+2026-10-03T11:12:36.596Z [INFO] [uds-messaging] Listening: /tmp/cc-socks/48006.sock
+2026-10-03T11:12:42.883Z [DEBUG] hooks module hdr-probe2@inline loaded (worker, environment 1, tier user); events: turn.start,turn.complete,session.start,command.run,ui.render,prompt.submit,session.send
+2026-10-03T11:12:42.896Z [DEBUG] plugin.register: hdr-probe2 (user, hdr-probe2@inline), judged by core alone: admitted
+2026-10-03T11:12:43.011Z [DEBUG] $.command.register (hdr-probe2): /msg listed
+2026-10-03T11:12:43.014Z [DEBUG] $.process.run (hdr-probe2): find with 5 args in /private/tmp/hdr-probe2 (pid 48242)
+2026-10-03T11:12:43.043Z [DEBUG] $.process.run (hdr-probe2): find exited 0 in 30ms, 0 + 0 chars
+2026-10-03T11:12:43.043Z [DEBUG] $.fs.write (hdr-probe2): /tmp/hdr-peers/w24_p8.json (79 bytes)
+2026-10-03T11:12:43.044Z [DEBUG] $.process.spawn (hdr-probe2): node with 2 args in /private/tmp/hdr-probe2 (pid 48248)
+2026-10-03T11:12:43.044Z [DEBUG] hooks module hdr-probe2@inline session.start settled in 36.9ms (worker hop, next() included)
+2026-10-03T11:12:53.631Z [DEBUG] $.process.run (hdr-probe2): herdr with 2 args in /private/tmp/hdr-probe2 (pid 48474)
+2026-10-03T11:12:53.638Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 8ms, 25469 + 0 chars
+2026-10-03T11:12:53.640Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w1V_p3.sock
+2026-10-03T11:12:53.646Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 6ms, 2 chars
+2026-10-03T11:12:53.648Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p1.sock
+2026-10-03T11:12:53.652Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 4ms, 2 chars
+2026-10-03T11:12:53.652Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p2.sock
+2026-10-03T11:12:53.655Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 3ms, 2 chars
+2026-10-03T11:12:53.656Z [ERROR] hook failed: hdr-probe2: errorKind=HooksError errorChars=88 (command.run; skipped; what is below it ran in its place)
+2026-10-03T11:12:53.656Z [DEBUG] [hdr-probe2] $.ui.log: command.run hook skipped: threw hdr-probe2: $.state.set takes a reference { plugin, key } (and id for a family's member)
+2026-10-03T11:12:53.659Z [DEBUG] hooks module hdr-probe2@inline command.run settled in 46.4ms (worker hop, next() included)
+2026-10-03T11:13:03.602Z [DEBUG] plugin.register: hdr-probe2 (user, hdr-probe2@inline), judged by core alone: admitted
+2026-10-03T11:13:03.607Z [DEBUG] $.process.spawn (hdr-probe2): node stopped: the op was aborted
+2026-10-03T11:13:03.608Z [DEBUG] hooks module hdr-probe2@inline reloaded in 6.4ms; events: turn.start,turn.complete,session.start,command.run,ui.render,prompt.submit,session.send
+2026-10-03T11:13:03.621Z [DEBUG] hooks worker: a promise a plugin did not await rejected: hdr-probe2: $.process.spawn (not awaited): the plugin's environment was unloaded
+2026-10-03T11:13:03.625Z [DEBUG] $.command.register (hdr-probe2): /msg listed
+2026-10-03T11:13:03.628Z [DEBUG] $.process.run (hdr-probe2): find with 5 args in /private/tmp/hdr-probe2 (pid 48665)
+2026-10-03T11:13:03.637Z [DEBUG] [hdr-probe2] $.ui.log: reloaded (7 hooks: turn.start, turn.complete, session.start, command.run, ui.render, prompt.submit, session.send)
+2026-10-03T11:13:03.642Z [DEBUG] $.process.run (hdr-probe2): find exited 0 in 14ms, 105 + 0 chars
+2026-10-03T11:13:03.642Z [DEBUG] $.process.run (hdr-probe2): grep with 3 args in /private/tmp/hdr-probe2 (pid 48667)
+2026-10-03T11:13:03.644Z [DEBUG] $.process.run (hdr-probe2): grep exited 1 in 2ms, 0 + 0 chars
+2026-10-03T11:13:03.644Z [DEBUG] $.fs.write (hdr-probe2): /tmp/hdr-peers/w24_p8.json (79 bytes)
+2026-10-03T11:13:03.645Z [DEBUG] $.process.spawn (hdr-probe2): node with 2 args in /private/tmp/hdr-probe2 (pid 48668)
+2026-10-03T11:13:03.645Z [DEBUG] hooks module hdr-probe2@inline session.start settled in 35.2ms (worker hop, next() included)
+2026-10-03T11:13:06.989Z [DEBUG] $.process.run (hdr-probe2): herdr with 2 args in /private/tmp/hdr-probe2 (pid 48700)
+2026-10-03T11:13:06.997Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 7ms, 25469 + 0 chars
+2026-10-03T11:13:06.998Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w1V_p3.sock
+2026-10-03T11:13:06.999Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:06.999Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p1.sock
+2026-10-03T11:13:07.000Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 1ms, 2 chars
+2026-10-03T11:13:07.000Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p2.sock
+2026-10-03T11:13:07.001Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 1ms, 2 chars
+2026-10-03T11:13:07.006Z [DEBUG] hooks module hdr-probe2@inline command.run settled in 32.1ms (worker hop, next() included)
+2026-10-03T11:13:07.010Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 5.6ms (worker hop, next() included) key=msg
+2026-10-03T11:13:07.010Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 4.8ms (worker hop, next() included) key=msg
+2026-10-03T11:13:07.016Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 4.7ms (worker hop, next() included) key=msg
+2026-10-03T11:13:07.017Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 3.7ms (worker hop, next() included) key=msg
+2026-10-03T11:13:17.619Z [DEBUG] prompt.fill (hdr-probe2): the box after goes to plugins that call $.prompt.read; the empty box (its hooks module does not call it (host rule; the scan lists $.command.register, $.env.get, $.fs.list, $.fs.read, $.fs.write, $.http.fetch, $.process.run, $.process.spawn, $.prompt.fill, $.prompt.submit, $.session.append, $.session.id, $.state.get, $.state.set, $.ui.close, $.ui.log, $.ui.open, $.ui.resolve))
+2026-10-03T11:13:17.619Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 5.5ms (worker hop, next() included) key=msg
+2026-10-03T11:13:30.829Z [DEBUG] $.process.run (hdr-probe2): herdr with 2 args in /private/tmp/hdr-probe2 (pid 49163)
+2026-10-03T11:13:30.835Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 7ms, 25469 + 0 chars
+2026-10-03T11:13:30.836Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w1V_p3.sock
+2026-10-03T11:13:30.837Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 1ms, 2 chars
+2026-10-03T11:13:30.837Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p1.sock
+2026-10-03T11:13:30.838Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 1ms, 2 chars
+2026-10-03T11:13:30.838Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p2.sock
+2026-10-03T11:13:30.839Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 1ms, 2 chars
+2026-10-03T11:13:30.843Z [DEBUG] hooks module hdr-probe2@inline command.run settled in 26.4ms (worker hop, next() included)
+2026-10-03T11:13:30.846Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 4.8ms (worker hop, next() included) key=msg
+2026-10-03T11:13:30.846Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 4.0ms (worker hop, next() included) key=msg
+2026-10-03T11:13:30.849Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 1.5ms (worker hop, next() included) key=msg
+2026-10-03T11:13:30.849Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 0.5ms (worker hop, next() included) key=msg
+2026-10-03T11:13:33.766Z [DEBUG] prompt.fill (hdr-probe2): the box after goes to plugins that call $.prompt.read; the empty box (its hooks module does not call it (host rule; the scan lists $.command.register, $.env.get, $.fs.list, $.fs.read, $.fs.write, $.http.fetch, $.process.run, $.process.spawn, $.prompt.fill, $.prompt.submit, $.session.append, $.session.id, $.state.get, $.state.set, $.ui.close, $.ui.log, $.ui.open, $.ui.resolve))
+2026-10-03T11:13:33.766Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 5.9ms (worker hop, next() included) key=msg
+2026-10-03T11:13:35.871Z [DEBUG] $.process.run (hdr-probe2): herdr with 2 args in /private/tmp/hdr-probe2 (pid 49256)
+2026-10-03T11:13:35.876Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 6ms, 25470 + 0 chars
+2026-10-03T11:13:35.877Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w1V_p3.sock
+2026-10-03T11:13:35.877Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:35.877Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p1.sock
+2026-10-03T11:13:35.878Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 1ms, 2 chars
+2026-10-03T11:13:35.878Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p2.sock
+2026-10-03T11:13:35.878Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:35.917Z [DEBUG] hooks module hdr-probe2@inline prompt.submit settled in 47.0ms (worker hop, next() included)
+2026-10-03T11:13:35.917Z [DEBUG] hooks module hdr-probe2@inline turn.start settled in 5.1ms (worker hop, next() included)
+2026-10-03T11:13:40.391Z [DEBUG] $.process.run (hdr-probe2): herdr with 2 args in /private/tmp/hdr-probe2 (pid 49404)
+2026-10-03T11:13:40.398Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 8ms, 25496 + 0 chars
+2026-10-03T11:13:40.400Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w1V_p3.sock
+2026-10-03T11:13:40.400Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:40.401Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p1.sock
+2026-10-03T11:13:40.401Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:40.402Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w9_p2.sock
+2026-10-03T11:13:40.402Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:40.403Z [DEBUG] $.process.run (hdr-probe2): find with 5 args in /private/tmp/hdr-probe2 (pid 49405)
+2026-10-03T11:13:40.419Z [DEBUG] $.process.run (hdr-probe2): find exited 0 in 16ms, 105 + 0 chars
+2026-10-03T11:13:40.420Z [DEBUG] $.process.run (hdr-probe2): grep with 3 args in /private/tmp/hdr-probe2 (pid 49406)
+2026-10-03T11:13:40.424Z [DEBUG] $.process.run (hdr-probe2): grep exited 1 in 5ms, 0 + 0 chars
+2026-10-03T11:13:40.425Z [DEBUG] $.http.fetch (hdr-probe2): POST http://peer/msg over /tmp/hdr-peers/w9_p1.sock
+2026-10-03T11:13:40.425Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 0ms, 2 chars
+2026-10-03T11:13:40.426Z [DEBUG] hooks module hdr-probe2@inline session.send settled in 42.3ms (worker hop, next() included)
+2026-10-03T11:13:40.426Z [DEBUG] session.send to pi-alpha (model): a hook delivered it itself; hooked by hdr-probe2; nothing sent
+2026-10-03T11:13:43.874Z [DEBUG] hooks module hdr-probe2@inline turn.complete settled in 3.5ms (worker hop, next() included)
+2026-10-03T11:14:09.982Z [DEBUG] $.prompt.submit (hdr-probe2): "[message from @pi-beta · w9:p3]\nGot it, rebasing now. Tests ran: 214 green."
+2026-10-03T11:14:09.990Z [DEBUG] hooks module hdr-probe2@inline prompt.submit skipped: re-entry (the plugin's own code raised it; origin hdr-probe2)
+2026-10-03T11:14:10.030Z [DEBUG] hooks module hdr-probe2@inline turn.start settled in 8.3ms (worker hop, next() included)
+2026-10-03T11:14:15.470Z [DEBUG] hooks module hdr-probe2@inline turn.complete settled in 4.0ms (worker hop, next() included)
+2026-10-03T11:14:42.916Z [DEBUG] plugin-dir watch on /tmp/hdr-probe2: idle, polling every 30000ms
+2026-10-03T11:15:31.459Z [DEBUG] $.process.spawn (hdr-probe2): node ended (SIGHUP) in 147814ms, 1 chunks

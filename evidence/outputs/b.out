@@ -1,0 +1,2 @@
+{"type":"peers","peers":[{"pane":"w1:p1","kind":"pi","name":"alpha"},{"pane":"w1:p9","kind":"cld","name":"probe"}]}
+{"type":"peers","peers":[{"pane":"w1:p1","kind":"pi","name":"alpha"}]}

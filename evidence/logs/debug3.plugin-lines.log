@@ -1,0 +1,85 @@
+2026-10-03T10:38:25.671Z [DEBUG] Checking plugin hdr-probe: skillsPath=none, skillsPaths=0 paths
+2026-10-03T10:38:25.672Z [INFO] [uds-messaging] Listening: /tmp/cc-socks/23190.sock
+2026-10-03T10:38:25.769Z [DEBUG] hooks module hdr-probe@inline loaded (worker, environment 1, tier user); events: turn.start,turn.complete,session.start,command.run,tool.call,ui.render,prompt.edit,prompt.submit
+2026-10-03T10:38:25.783Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:38:25.853Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 12.6ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:38:25.893Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send (1 tool(s) on server "hdr-probe"); connecting
+2026-10-03T10:38:25.995Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send visible after 102ms
+2026-10-03T10:38:26.000Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 23259)
+2026-10-03T10:38:26.016Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 20ms, 0 + 0 chars
+2026-10-03T10:38:26.017Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 23264)
+2026-10-03T10:38:26.017Z [DEBUG] hooks module hdr-probe@inline session.start settled in 127.9ms (worker hop, next() included)
+2026-10-03T10:38:37.561Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 19.7ms (worker hop, next() included)
+2026-10-03T10:38:37.561Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 0.7ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:38:38.080Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 4.2ms (worker hop, next() included) key=placeholder
+2026-10-03T10:38:38.080Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 4.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:38:38.107Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 23411)
+2026-10-03T10:38:38.127Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 20ms, 104 + 0 chars
+2026-10-03T10:38:38.127Z [DEBUG] $.process.run (hdr-probe): grep with 3 args in /private/tmp/hdr-probe (pid 23412)
+2026-10-03T10:38:38.128Z [DEBUG] $.process.run (hdr-probe): grep exited 0 in 1ms, 104 + 0 chars
+2026-10-03T10:38:38.129Z [DEBUG] $.http.fetch (hdr-probe): POST http://127.0.0.1:8766/hello
+2026-10-03T10:38:38.130Z [DEBUG] $.http.fetch (hdr-probe): 200 in 1ms, 2 chars
+2026-10-03T10:38:38.130Z [DEBUG] hooks module hdr-probe@inline command.run settled in 62.6ms (worker hop, next() included)
+2026-10-03T10:38:38.138Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 1.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:38:50.960Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=false)
+2026-10-03T10:38:50.960Z [DEBUG] $.prompt.submit (hdr-probe): "[hdr message from @hdr-pi-beta (pane w9:p2)]\nStatus: the API tests pass on main, 214 green, 0 red. Please just acknowledge in one line."
+2026-10-03T10:38:50.971Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:38:50.977Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:38:50.980Z [DEBUG] hooks module hdr-probe@inline prompt.submit skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:38:50.985Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 7.0ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:38:51.041Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 15.0ms (worker hop, next() included)
+2026-10-03T10:38:51.044Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:38:53.201Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 4.6ms (worker hop, next() included)
+2026-10-03T10:38:53.201Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 1.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:39:26.317Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:39:26.322Z [DEBUG] $.process.spawn (hdr-probe): node stopped: the op was aborted
+2026-10-03T10:39:26.342Z [DEBUG] hooks module hdr-probe@inline reloaded in 25.2ms; events: turn.start,turn.complete,session.start,command.run,tool.call,ui.render,prompt.edit,prompt.submit
+2026-10-03T10:39:26.352Z [DEBUG] hooks worker: a promise a plugin did not await rejected: hdr-probe: $.process.spawn (not awaited): the plugin's environment was unloaded
+2026-10-03T10:39:26.354Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:26.356Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send unchanged and listed; not re-registered
+2026-10-03T10:39:26.356Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 2.1ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:39:26.358Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 24247)
+2026-10-03T10:39:26.366Z [DEBUG] [hdr-probe] $.ui.log: reloaded (8 hooks: turn.start, turn.complete, session.start, command.run, tool.call, ui.render, prompt.edit, prompt.submit)
+2026-10-03T10:39:26.375Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 18ms, 104 + 0 chars
+2026-10-03T10:39:26.375Z [DEBUG] $.process.run (hdr-probe): grep with 3 args in /private/tmp/hdr-probe (pid 24249)
+2026-10-03T10:39:26.377Z [DEBUG] $.process.run (hdr-probe): grep exited 0 in 2ms, 208 + 0 chars
+2026-10-03T10:39:26.378Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 24250)
+2026-10-03T10:39:26.378Z [DEBUG] hooks module hdr-probe@inline session.start settled in 35.0ms (worker hop, next() included)
+2026-10-03T10:39:31.267Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:38.638Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:40.052Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=false)
+2026-10-03T10:39:40.053Z [DEBUG] $.prompt.submit (hdr-probe): "[hdr message from @hdr-pi-beta (pane w9:p2)]\nSecond status: lint is clean across all 37 packages after the refactor. Acknowledge in one line."
+2026-10-03T10:39:40.057Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:40.064Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:40.067Z [DEBUG] hooks module hdr-probe@inline prompt.submit skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:40.070Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 5.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:39:40.112Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 1.4ms (worker hop, next() included)
+2026-10-03T10:39:40.114Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:39:41.428Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 3.9ms (worker hop, next() included)
+2026-10-03T10:39:41.428Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 1.2ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:40:04.250Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:40:04.255Z [DEBUG] $.process.spawn (hdr-probe): node stopped: the op was aborted
+2026-10-03T10:40:04.275Z [DEBUG] hooks module hdr-probe@inline reloaded in 25.2ms; events: turn.start,turn.complete,session.start,command.run,tool.call,ui.render,prompt.edit,prompt.submit
+2026-10-03T10:40:04.284Z [DEBUG] hooks worker: a promise a plugin did not await rejected: hdr-probe: $.process.spawn (not awaited): the plugin's environment was unloaded
+2026-10-03T10:40:04.287Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:40:04.287Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:40:04.288Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send unchanged and listed; not re-registered
+2026-10-03T10:40:04.289Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 2.0ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:40:04.290Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 24945)
+2026-10-03T10:40:04.298Z [DEBUG] [hdr-probe] $.ui.log: reloaded (8 hooks: turn.start, turn.complete, session.start, command.run, tool.call, ui.render, prompt.edit, prompt.submit)
+2026-10-03T10:40:04.305Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 16ms, 104 + 0 chars
+2026-10-03T10:40:04.306Z [DEBUG] $.process.run (hdr-probe): grep with 3 args in /private/tmp/hdr-probe (pid 24947)
+2026-10-03T10:40:04.308Z [DEBUG] $.process.run (hdr-probe): grep exited 0 in 2ms, 208 + 0 chars
+2026-10-03T10:40:04.309Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 24948)
+2026-10-03T10:40:04.309Z [DEBUG] hooks module hdr-probe@inline session.start settled in 33.2ms (worker hop, next() included)
+2026-10-03T10:40:05.633Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 17.5ms (worker hop, next() included)
+2026-10-03T10:40:05.650Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr any-row: origin={"kind":"composer"} text="say ok"
+2026-10-03T10:40:05.650Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 9.5ms (worker hop, next() included) key=placeholder
+2026-10-03T10:40:05.651Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 9.4ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:40:05.677Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 43.9ms (worker hop, next() included)
+2026-10-03T10:40:05.677Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 1.2ms (worker hop, next() included)
+2026-10-03T10:40:05.680Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr any-row: origin={"kind":"composer"} text="say ok"
+2026-10-03T10:40:05.680Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 0.7ms (worker hop, next() included) key=ab150b40-efae-4810-9a8f-315b7379a230
+2026-10-03T10:40:11.313Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 2.3ms (worker hop, next() included)
+2026-10-03T10:40:11.318Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 1.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:40:30.851Z [DEBUG] $.process.spawn (hdr-probe): node ended (SIGTERM) in 26543ms, 1 chunks

@@ -1,0 +1,5 @@
+{
+  "extends": "./.claude-plugin/types/tsconfig.json",
+  // hooks/core.ts is imported with its .ts suffix so Node (inbox.ts) and Pi can import it too.
+  "compilerOptions": { "allowImportingTsExtensions": true }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "a2a-msg",
+  "version": "0.1.0",
+  "description": "Message Pi peers in this Herdr workspace: /msg picks one, Claude sends with SendMessage over its Unix socket; Pi messages arrive as prompts",
+  "types": "./types/index.d.ts"
+}

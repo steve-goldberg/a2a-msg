@@ -1,0 +1,1 @@
+{ "name": "hdr-probe", "version": "0.1.0", "description": "Probe: hub listener, peer mentions and send tool", "types": "./types/index.d.ts" }

@@ -1,0 +1,17 @@
+{"type":"peers","peers":[{"pane":"w9:p2","kind":"pi","name":"beta"}]}
+{"type":"peers","peers":[{"pane":"w9:p2","kind":"pi","name":"beta"},{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"message","from":{"pane":"w24:p7","kind":"cld","name":"w24:p7"},"text":"the schema migration finished, rebase is safe"}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"},{"pane":"w9:p2","kind":"pi","name":"beta"}]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"},{"pane":"w9:p2","kind":"pi","name":"beta"}]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[]}
+{"type":"peers","peers":[{"pane":"w24:p7","kind":"cld","name":"w24:p7"}]}
+{"type":"peers","peers":[]}

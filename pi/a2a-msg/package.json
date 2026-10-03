@@ -1,0 +1,15 @@
+{
+  "name": "a2a-msg",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pi side of a2a-msg: /msg to Claude peers, @ completion for Pi peers, send_message, a Unix-socket inbox",
+  "type": "module",
+  "keywords": ["pi-package"],
+  "pi": {
+    "extensions": ["./index.ts"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  }
+}

@@ -1,0 +1,40 @@
+2026-10-03T11:36:14.524Z [DEBUG] Checking plugin hdr-probe2: skillsPath=none, skillsPaths=0 paths
+2026-10-03T11:36:14.525Z [INFO] [uds-messaging] Listening: /tmp/cc-socks/65586.sock
+2026-10-03T11:36:14.618Z [DEBUG] hooks module hdr-probe2@inline loaded (worker, environment 1, tier user); events: turn.start,turn.complete,session.start,command.run,session.end,ui.render,prompt.submit,session.send
+2026-10-03T11:36:14.630Z [DEBUG] plugin.register: hdr-probe2 (user, hdr-probe2@inline), judged by core alone: admitted
+2026-10-03T11:36:14.735Z [DEBUG] $.command.register (hdr-probe2): /msg listed
+2026-10-03T11:36:14.739Z [DEBUG] $.process.run (hdr-probe2): find with 5 args in /private/tmp/hdr-probe2 (pid 65617)
+2026-10-03T11:36:14.766Z [DEBUG] $.process.run (hdr-probe2): find exited 0 in 28ms, 0 + 0 chars
+2026-10-03T11:36:14.766Z [DEBUG] $.fs.write (hdr-probe2): /tmp/hdr-peers/w24_pB.json (79 bytes)
+2026-10-03T11:36:14.767Z [DEBUG] $.process.spawn (hdr-probe2): node with 2 args in /private/tmp/hdr-probe2 (pid 65622)
+2026-10-03T11:36:14.768Z [DEBUG] hooks module hdr-probe2@inline session.start settled in 38.8ms (worker hop, next() included)
+2026-10-03T11:36:30.095Z [DEBUG] [hdr-probe2] $.ui.log (to debug): msg: command.run
+2026-10-03T11:36:30.097Z [DEBUG] $.process.run (hdr-probe2): herdr with 4 args in /private/tmp/hdr-probe2 (pid 65672)
+2026-10-03T11:36:30.103Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 7ms, 3193 + 0 chars
+2026-10-03T11:36:30.104Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w24_fake1.sock
+2026-10-03T11:36:30.108Z [DEBUG] $.http.fetch (hdr-probe2): 200 in 4ms, 2 chars
+2026-10-03T11:36:30.109Z [DEBUG] [hdr-probe2] $.ui.log (to debug): ping w24:fake1: resolved status=200 ok=true
+2026-10-03T11:36:30.109Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w24_pA.sock
+2026-10-03T11:36:30.110Z [DEBUG] [hdr-probe2] $.ui.log (to debug): ping w24:pA: rejected HooksError: hdr-probe2: $.http.fetch(http://peer/ping) over /tmp/hdr-peers/w24_pA.sock failed: ECONNREFUSED: ECONNREFUSE
+2026-10-03T11:36:30.110Z [DEBUG] [hdr-probe2] $.ui.log (to debug): msg: live=["w24:fake1"]
+2026-10-03T11:36:30.115Z [DEBUG] hooks module hdr-probe2@inline command.run settled in 36.0ms (worker hop, next() included)
+2026-10-03T11:36:30.119Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 6.1ms (worker hop, next() included) key=msg
+2026-10-03T11:36:30.120Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 5.3ms (worker hop, next() included) key=msg
+2026-10-03T11:36:30.123Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 1.5ms (worker hop, next() included) key=msg
+2026-10-03T11:36:30.123Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 0.5ms (worker hop, next() included) key=msg
+2026-10-03T11:36:42.545Z [DEBUG] [hdr-probe2] $.ui.log (to debug): msg: onSelect w24:fake1
+2026-10-03T11:36:42.550Z [DEBUG] prompt.fill (hdr-probe2): the box after goes to plugins that call $.prompt.read; the empty box (its hooks module does not call it (host rule; the scan lists $.command.register, $.env.get, $.fs.list, $.fs.read, $.fs.write, $.http.fetch, $.process.run, $.process.spawn, $.prompt.fill, $.prompt.submit, $.session.append, $.session.id, $.state.get, $.state.set, $.ui.close, $.ui.log, $.ui.open, $.ui.resolve))
+2026-10-03T11:36:42.550Z [DEBUG] hooks module hdr-probe2@inline ui.render settled in 6.9ms (worker hop, next() included) key=msg
+2026-10-03T11:36:57.547Z [DEBUG] [hdr-probe2] $.ui.log (to debug): msg: command.run
+2026-10-03T11:36:57.549Z [DEBUG] $.process.run (hdr-probe2): herdr with 4 args in /private/tmp/hdr-probe2 (pid 65986)
+2026-10-03T11:36:57.555Z [DEBUG] $.process.run (hdr-probe2): herdr exited 0 in 7ms, 3193 + 0 chars
+2026-10-03T11:36:57.555Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w24_fake1.sock
+2026-10-03T11:36:57.556Z [DEBUG] [hdr-probe2] $.ui.log (to debug): ping w24:fake1: rejected HooksError: hdr-probe2: $.http.fetch(http://peer/ping) over /tmp/hdr-peers/w24_fake1.sock failed: ECONNREFUSED: ECONNREF
+2026-10-03T11:36:57.556Z [DEBUG] $.http.fetch (hdr-probe2): GET http://peer/ping over /tmp/hdr-peers/w24_pA.sock
+2026-10-03T11:36:57.557Z [DEBUG] [hdr-probe2] $.ui.log (to debug): ping w24:pA: rejected HooksError: hdr-probe2: $.http.fetch(http://peer/ping) over /tmp/hdr-peers/w24_pA.sock failed: ECONNREFUSED: ECONNREFUSE
+2026-10-03T11:36:57.557Z [DEBUG] [hdr-probe2] $.ui.log (to debug): msg: live=[]
+2026-10-03T11:36:57.557Z [DEBUG] hooks module hdr-probe2@inline command.run settled in 22.5ms (worker hop, next() included)
+2026-10-03T11:37:05.896Z [DEBUG] $.process.spawn (hdr-probe2): node ended (SIGHUP) in 51129ms, 0 chunks
+2026-10-03T11:37:05.949Z [DEBUG] $.process.run (hdr-probe2): rm with 3 args in /private/tmp/hdr-probe2 (pid 66099)
+2026-10-03T11:37:05.950Z [DEBUG] $.process.run (hdr-probe2): rm exited 0 in 2ms, 0 + 0 chars
+2026-10-03T11:37:05.951Z [DEBUG] hooks module hdr-probe2@inline session.end settled in 2.6ms (worker hop, next() included)

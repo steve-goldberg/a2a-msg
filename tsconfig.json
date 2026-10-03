@@ -1,0 +1,24 @@
+{
+  // Type-checks the Pi extension, the shared core, the inbox and the unit tests (the Claude mods have
+  // their own tsconfig.json, laid by Claude Code). Pi's packages come from .host: run scripts/link-pi.sh first.
+  "compilerOptions": {
+    "target": "es2024",
+    "lib": ["es2024"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "types": ["node"],
+    "paths": {
+      "typebox": ["./.host/node_modules/typebox/build/index.d.mts"],
+      "@earendil-works/pi-coding-agent": ["./.host/node_modules/@earendil-works/pi-coding-agent/dist/index.d.ts"],
+      "@earendil-works/pi-tui": ["./.host/node_modules/@earendil-works/pi-tui/dist/index.d.ts"]
+    }
+  },
+  "include": ["pi/a2a-msg/*.ts", "test/*.ts", "claude/a2a-msg/inbox.ts", "claude/a2a-msg/hooks/core.ts"]
+}

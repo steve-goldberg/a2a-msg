@@ -1,0 +1,5 @@
+node_modules/
+# links to the installed Pi's packages (scripts/link-pi.sh)
+.host/
+# laid by Claude Code each time it loads a mod
+claude/*/.claude-plugin/types/

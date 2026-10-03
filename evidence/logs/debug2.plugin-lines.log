@@ -1,0 +1,32 @@
+2026-10-03T10:34:26.099Z [DEBUG] Checking plugin hdr-probe: skillsPath=none, skillsPaths=0 paths
+2026-10-03T10:34:26.100Z [INFO] [uds-messaging] Listening: /tmp/cc-socks/18861.sock
+2026-10-03T10:34:42.187Z [DEBUG] hooks module hdr-probe@inline loaded (worker, environment 1, tier user); events: turn.start,turn.complete,session.start,tool.call,prompt.edit,prompt.submit,ui.render
+2026-10-03T10:34:42.199Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:34:42.268Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 14.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:34:42.308Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send (1 tool(s) on server "hdr-probe"); connecting
+2026-10-03T10:34:42.413Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send visible after 105ms
+2026-10-03T10:34:42.414Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 19145)
+2026-10-03T10:34:42.414Z [DEBUG] hooks module hdr-probe@inline session.start settled in 112.4ms (worker hop, next() included)
+2026-10-03T10:34:55.423Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 5.4ms (worker hop, next() included)
+2026-10-03T10:34:55.436Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 12.4ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:34:57.457Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 9.6ms (worker hop, next() included)
+2026-10-03T10:34:57.458Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 1.5ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:35:06.784Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 3.9ms (worker hop, next() included)
+2026-10-03T10:35:06.785Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 0.7ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:35:07.332Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 6.9ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:35:07.417Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 51.0ms (worker hop, next() included)
+2026-10-03T10:35:07.417Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 14.5ms (worker hop, next() included)
+2026-10-03T10:35:20.442Z [DEBUG] $.http.fetch (hdr-probe): POST http://127.0.0.1:8766/send
+2026-10-03T10:35:20.445Z [DEBUG] $.http.fetch (hdr-probe): 200 in 3ms, 2 chars
+2026-10-03T10:35:20.445Z [DEBUG] hooks module hdr-probe@inline tool.call settled in 10.8ms (worker hop, next() included)
+2026-10-03T10:35:24.186Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 2.4ms (worker hop, next() included)
+2026-10-03T10:35:24.193Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 2.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:35:41.222Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=false): [hdr message from w9:p2] reply: the word is MANGO, just acknowledge it
+2026-10-03T10:35:41.222Z [DEBUG] $.prompt.submit (hdr-probe): "[hdr message from w9:p2] reply: the word is MANGO, just acknowledge it"
+2026-10-03T10:35:41.237Z [DEBUG] hooks module hdr-probe@inline prompt.submit skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:35:41.240Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 4.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:35:41.282Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 4.7ms (worker hop, next() included)
+2026-10-03T10:35:52.578Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 3.8ms (worker hop, next() included)
+2026-10-03T10:35:52.579Z [DEBUG] hooks module hdr-probe@inline ui.render settled in 1.1ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:36:12.215Z [DEBUG] plugin-dir watch on /tmp/hdr-probe: idle, polling every 30000ms
+2026-10-03T10:36:12.944Z [DEBUG] $.process.spawn (hdr-probe): node ended (SIGHUP) in 90530ms, 4 chunks

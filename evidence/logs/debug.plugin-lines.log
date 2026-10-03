@@ -1,0 +1,17 @@
+2026-10-03T10:33:13.717Z [DEBUG] Checking plugin hdr-probe: skillsPath=none, skillsPaths=0 paths
+2026-10-03T10:33:13.719Z [INFO] [uds-messaging] Listening: /tmp/cc-socks/17448.sock
+2026-10-03T10:33:13.799Z [DEBUG] hooks module hdr-probe@inline loaded (worker, environment 1, tier user); events: turn.start,turn.complete,session.start,tool.call,prompt.edit,prompt.submit,ui.render
+2026-10-03T10:33:13.800Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:33:13.901Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send (1 tool(s) on server "hdr-probe"); connecting
+2026-10-03T10:33:13.916Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send visible after 15ms
+2026-10-03T10:33:13.917Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 17487)
+2026-10-03T10:33:13.917Z [DEBUG] hooks module hdr-probe@inline session.start settled in 20.6ms (worker hop, next() included)
+2026-10-03T10:33:15.222Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 48.2ms (worker hop, next() included)
+2026-10-03T10:33:15.222Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 10.8ms (worker hop, next() included)
+2026-10-03T10:33:19.609Z [DEBUG] $.http.fetch (hdr-probe): POST http://127.0.0.1:8766/send
+2026-10-03T10:33:19.612Z [DEBUG] $.http.fetch (hdr-probe): 200 in 3ms, 2 chars
+2026-10-03T10:33:19.613Z [ERROR] hook failed: hdr-probe: errorKind=HooksError errorChars=40 (tool.call; skipped; what is below it ran in its place)
+2026-10-03T10:33:19.613Z [ERROR] hdr-probe: tool.call hook skipped: returned the wrong shape (neither { result } nor { deny })
+2026-10-03T10:33:19.653Z [DEBUG] hooks module hdr-probe@inline tool.call settled in 45.9ms (worker hop, next() included)
+2026-10-03T10:33:54.288Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 0.5ms (worker hop, next() included)
+2026-10-03T10:33:54.313Z [DEBUG] $.process.spawn (hdr-probe): node ended (SIGTERM) in 40397ms, 3 chunks

@@ -1,0 +1,241 @@
+2026-10-03T10:40:33.008Z [DEBUG] --plugin-dir /tmp/hdr-view is one plugin: .claude-plugin at its top marks it
+2026-10-03T10:40:33.022Z [DEBUG] Read hooks.json for plugin hdr-view (enabled=true): /tmp/hdr-view/hooks/hooks.json
+2026-10-03T10:40:33.023Z [DEBUG] Loaded inline plugin from path: hdr-view
+2026-10-03T10:40:33.023Z [INFO] [uds-messaging] Listening: /tmp/cc-socks/25697.sock
+2026-10-03T10:40:33.027Z [DEBUG] Checking plugin hdr-probe: skillsPath=none, skillsPaths=0 paths
+2026-10-03T10:40:33.027Z [DEBUG] Checking plugin hdr-view: skillsPath=none, skillsPaths=0 paths
+2026-10-03T10:40:33.130Z [DEBUG] hooks module hdr-probe@inline loaded (worker, environment 1, tier user); events: turn.start,turn.complete,session.start,command.run,tool.call,prompt.edit,prompt.submit,ui.render
+2026-10-03T10:40:33.143Z [DEBUG] hooks module hdr-view@inline loaded (worker, environment 2, tier user); events: ui.render
+2026-10-03T10:40:33.152Z [DEBUG] engine.create: no plugin-provided interfaces; $ built for hdr-probe,hdr-view,cc-plugin-agents-md,cc-plugin-diff
+2026-10-03T10:40:33.152Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:40:33.152Z [DEBUG] plugin.register: hdr-view (user, hdr-view@inline), judged by core alone: admitted
+2026-10-03T10:40:33.159Z [DEBUG] plugin-dir watch: watching hdr-probe, hdr-view; folders of plugins none
+2026-10-03T10:40:33.214Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 14.2ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:40:33.249Z [DEBUG] type root of hdr-view at /private/tmp/hdr-view/.claude-plugin/types: entries claude-code, claude-code-tools, claude-code-mcp; wrote .claude-plugin/types/claude-code/index.d.ts, .claude-plugin/types/claude-code-tools/index.d.ts, .claude-plugin/types/claude-code-mcp/index.d.ts, .claude-plugin/types/tsconfig.json, .claude-plugin/types/.gitignore, tsconfig.json
+2026-10-03T10:40:33.255Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send (1 tool(s) on server "hdr-probe"); connecting
+2026-10-03T10:40:33.358Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send visible after 103ms
+2026-10-03T10:40:33.359Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 25756)
+2026-10-03T10:40:33.371Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 13ms, 0 + 0 chars
+2026-10-03T10:40:33.372Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 25758)
+2026-10-03T10:40:33.372Z [DEBUG] hooks module hdr-probe@inline session.start settled in 122.1ms (worker hop, next() included)
+2026-10-03T10:40:56.165Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=false)
+2026-10-03T10:40:56.165Z [DEBUG] $.prompt.submit (hdr-probe): "[hdr message from @hdr-pi-beta (pane w9:p2)]\nIdle check: build artifacts uploaded to the staging bucket, 12 files, checksum verified. One-line ack please."
+2026-10-03T10:40:56.178Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:40:56.178Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:40:56.188Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:40:56.188Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:40:56.192Z [DEBUG] hooks module hdr-probe@inline prompt.submit skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:40:56.194Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=0
+2026-10-03T10:40:56.194Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=0
+2026-10-03T10:40:56.194Z [DEBUG] hooks module hdr-view@inline ui.render settled in 16.1ms (worker hop, next() included) key=a0280568-ef38-4314-9d2b-d35d0b105f6b
+2026-10-03T10:40:56.194Z [DEBUG] hooks module hdr-view@inline ui.render settled in 6.0ms (worker hop, next() included) key=placeholder
+2026-10-03T10:40:56.196Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 7.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:40:56.235Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 3.1ms (worker hop, next() included)
+2026-10-03T10:40:56.238Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:40:56.238Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:40:56.239Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:40:56.240Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.2ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:40:58.791Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 1.7ms (worker hop, next() included)
+2026-10-03T10:40:58.800Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 3.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:41:14.654Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:41:14.654Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:41:14.655Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=true at=37
+2026-10-03T10:41:14.656Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.2ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:41:16.183Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:41:16.183Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:41:16.189Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:41:16.191Z [DEBUG] hooks module hdr-view@inline ui.render settled in 7.8ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:41:20.572Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 13.3ms (worker hop, next() included)
+2026-10-03T10:41:20.580Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:41:20.581Z [DEBUG] hooks module hdr-view@inline ui.render settled in 3.9ms (worker hop, next() included) key=placeholder
+2026-10-03T10:41:20.582Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 5.0ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:41:20.617Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 45.1ms (worker hop, next() included)
+2026-10-03T10:41:20.617Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 5.1ms (worker hop, next() included)
+2026-10-03T10:41:20.621Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:41:20.621Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.8ms (worker hop, next() included) key=02c11fed-e784-47a4-b822-95a6a1d885e7
+2026-10-03T10:41:28.972Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=true)
+2026-10-03T10:41:46.887Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 18.1ms (worker hop, next() included)
+2026-10-03T10:41:46.895Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 3.5ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:42:08.829Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:42:08.834Z [DEBUG] $.process.spawn (hdr-probe): node stopped: the op was aborted
+2026-10-03T10:42:08.835Z [DEBUG] hooks module hdr-probe@inline reloaded in 6.5ms; events: turn.start,turn.complete,session.start,command.run,tool.call,prompt.edit,prompt.submit,ui.render
+2026-10-03T10:42:08.848Z [DEBUG] hooks worker: a promise a plugin did not await rejected: hdr-probe: $.process.spawn (not awaited): the plugin's environment was unloaded
+2026-10-03T10:42:08.851Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:42:08.851Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:42:08.851Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:42:08.851Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:42:08.852Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.1ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:42:08.852Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send unchanged and listed; not re-registered
+2026-10-03T10:42:08.852Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.2ms (worker hop, next() included) key=02c11fed-e784-47a4-b822-95a6a1d885e7
+2026-10-03T10:42:08.852Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 1.4ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:42:08.853Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 27555)
+2026-10-03T10:42:08.863Z [DEBUG] [hdr-probe] $.ui.log: reloaded (8 hooks: turn.start, turn.complete, session.start, command.run, tool.call, prompt.edit, prompt.submit, ui.render)
+2026-10-03T10:42:08.874Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 22ms, 104 + 0 chars
+2026-10-03T10:42:08.874Z [DEBUG] $.process.run (hdr-probe): grep with 3 args in /private/tmp/hdr-probe (pid 27558)
+2026-10-03T10:42:08.878Z [DEBUG] $.process.run (hdr-probe): grep exited 1 in 4ms, 0 + 0 chars
+2026-10-03T10:42:08.879Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 27559)
+2026-10-03T10:42:08.879Z [DEBUG] hooks module hdr-probe@inline session.start settled in 42.5ms (worker hop, next() included)
+2026-10-03T10:42:10.474Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 4.7ms (worker hop, next() included)
+2026-10-03T10:42:10.478Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 4.1ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:42:10.483Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:42:10.483Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.4ms (worker hop, next() included) key=placeholder
+2026-10-03T10:42:10.483Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 2.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:42:10.521Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 43.6ms (worker hop, next() included)
+2026-10-03T10:42:10.521Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 1.6ms (worker hop, next() included)
+2026-10-03T10:42:10.524Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:42:10.524Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.6ms (worker hop, next() included) key=f01a82e5-df4d-4c30-b3da-898201848a70
+2026-10-03T10:42:18.887Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=true)
+2026-10-03T10:42:35.392Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 18.7ms (worker hop, next() included)
+2026-10-03T10:42:35.399Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 3.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:43:13.179Z [DEBUG] plugin-dir watch on /tmp/hdr-probe: idle, polling every 30000ms
+2026-10-03T10:43:13.180Z [DEBUG] plugin-dir watch on /tmp/hdr-view: idle, polling every 30000ms
+2026-10-03T10:43:50.561Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 3.7ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:43:50.661Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:43:50.661Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:43:50.662Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:43:50.662Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:43:50.663Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.3ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:43:50.663Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.2ms (worker hop, next() included) key=02c11fed-e784-47a4-b822-95a6a1d885e7
+2026-10-03T10:43:50.663Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.1ms (worker hop, next() included) key=f01a82e5-df4d-4c30-b3da-898201848a70
+2026-10-03T10:43:50.663Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:43:50.711Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 0.9ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:01.907Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 10.6ms (worker hop, next() included)
+2026-10-03T10:44:01.915Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 11.1ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:01.916Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:01.917Z [DEBUG] hooks module hdr-view@inline ui.render settled in 3.5ms (worker hop, next() included) key=placeholder
+2026-10-03T10:44:01.918Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 4.1ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:01.956Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 47.8ms (worker hop, next() included)
+2026-10-03T10:44:01.957Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 4.7ms (worker hop, next() included)
+2026-10-03T10:44:01.959Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:01.959Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.7ms (worker hop, next() included) key=f5bcd4d3-c043-4886-9b66-e1a6f35792da
+2026-10-03T10:44:01.968Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:44:01.971Z [DEBUG] $.process.spawn (hdr-probe): node stopped: the op was aborted
+2026-10-03T10:44:01.986Z [DEBUG] hooks module hdr-probe@inline reloaded in 18.6ms; events: turn.start,turn.complete,session.start,command.run,tool.call,prompt.edit,prompt.submit,ui.render
+2026-10-03T10:44:01.994Z [DEBUG] hooks worker: a promise a plugin did not await rejected: hdr-probe: $.process.spawn (not awaited): the plugin's environment was unloaded
+2026-10-03T10:44:01.996Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:44:01.996Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:44:01.998Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:44:01.998Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:01.998Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:01.998Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:01.998Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.0ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:44:01.998Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.0ms (worker hop, next() included) key=02c11fed-e784-47a4-b822-95a6a1d885e7
+2026-10-03T10:44:01.998Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.9ms (worker hop, next() included) key=f01a82e5-df4d-4c30-b3da-898201848a70
+2026-10-03T10:44:01.998Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.9ms (worker hop, next() included) key=f5bcd4d3-c043-4886-9b66-e1a6f35792da
+2026-10-03T10:44:01.998Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 1.9ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:01.998Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send unchanged and listed; not re-registered
+2026-10-03T10:44:02.001Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 29572)
+2026-10-03T10:44:02.005Z [DEBUG] [hdr-probe] $.ui.log: reloaded (8 hooks: turn.start, turn.complete, session.start, command.run, tool.call, prompt.edit, prompt.submit, ui.render)
+2026-10-03T10:44:02.011Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 11ms, 104 + 0 chars
+2026-10-03T10:44:02.012Z [DEBUG] $.process.run (hdr-probe): grep with 3 args in /private/tmp/hdr-probe (pid 29573)
+2026-10-03T10:44:02.015Z [DEBUG] $.process.run (hdr-probe): grep exited 1 in 3ms, 0 + 0 chars
+2026-10-03T10:44:02.015Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 29574)
+2026-10-03T10:44:02.016Z [DEBUG] hooks module hdr-probe@inline session.start settled in 28.4ms (worker hop, next() included)
+2026-10-03T10:44:03.185Z [DEBUG] plugin-dir watch on /tmp/hdr-probe: active, polling every 400ms
+2026-10-03T10:44:03.186Z [DEBUG] plugin-dir watch on /tmp/hdr-view: active, polling every 400ms
+2026-10-03T10:44:10.313Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=false)
+2026-10-03T10:44:10.313Z [DEBUG] $.prompt.submit (hdr-probe): "[hdr message from @hdr-pi-beta (pane w9:p2)]\nMid-turn three: the flaky test is test_upload_retry, skip it for now."
+2026-10-03T10:44:10.317Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:44:10.317Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:44:10.318Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=0
+2026-10-03T10:44:10.318Z [DEBUG] hooks module hdr-view@inline ui.render settled in 1.6ms (worker hop, next() included) key=8eb2aa02-62cf-4c33-a9ef-6216b2830eef
+2026-10-03T10:44:25.886Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 2.3ms (worker hop, next() included)
+2026-10-03T10:44:25.892Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:44:25.892Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:44:25.892Z [DEBUG] hooks module hdr-probe@inline prompt.submit skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:44:25.894Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=0
+2026-10-03T10:44:25.895Z [DEBUG] hooks module hdr-view@inline ui.render settled in 3.1ms (worker hop, next() included) key=placeholder
+2026-10-03T10:44:25.895Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 5.9ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:25.895Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 3.1ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:25.939Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 1.5ms (worker hop, next() included)
+2026-10-03T10:44:25.941Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:44:25.941Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:44:25.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:44:25.942Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.7ms (worker hop, next() included) key=7256381a-0a5f-44f0-ad39-25d1aff08c62
+2026-10-03T10:44:28.050Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 4.2ms (worker hop, next() included)
+2026-10-03T10:44:28.050Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 1.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:56.584Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 7.8ms (worker hop, next() included)
+2026-10-03T10:44:56.588Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:56.589Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.2ms (worker hop, next() included) key=placeholder
+2026-10-03T10:44:56.589Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 2.2ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:44:56.626Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 42.0ms (worker hop, next() included)
+2026-10-03T10:44:56.626Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 4.6ms (worker hop, next() included)
+2026-10-03T10:44:56.628Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:44:56.629Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.7ms (worker hop, next() included) key=fb6d9583-b923-4e27-a795-94a928524166
+2026-10-03T10:45:04.989Z [DEBUG] [hdr-probe] $.ui.log (to debug): hdr inbound (running=true)
+2026-10-03T10:45:04.994Z [DEBUG] [hdr-probe] $.ui.log: ↘ @hdr-pi-beta: Mid-turn four: release notes draft is in docs/RELEASE.md, review after.
+2026-10-03T10:45:27.618Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 17.8ms (worker hop, next() included)
+2026-10-03T10:45:27.624Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 2.0ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:45:51.179Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 5.2ms (worker hop, next() included)
+2026-10-03T10:45:51.180Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 0.5ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:45:53.031Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 6.2ms (worker hop, next() included)
+2026-10-03T10:45:53.032Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 0.8ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:45:58.542Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 4.9ms (worker hop, next() included)
+2026-10-03T10:45:58.556Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 14.5ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:46:00.384Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 3.6ms (worker hop, next() included)
+2026-10-03T10:46:00.384Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 0.5ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:46:09.226Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 7.7ms (worker hop, next() included)
+2026-10-03T10:46:09.229Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 2.2ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:46:11.077Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 5.6ms (worker hop, next() included)
+2026-10-03T10:46:11.078Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 0.7ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:47:13.221Z [DEBUG] plugin-dir watch on /tmp/hdr-probe: idle, polling every 30000ms
+2026-10-03T10:47:13.221Z [DEBUG] plugin-dir watch on /tmp/hdr-view: idle, polling every 30000ms
+2026-10-03T10:48:04.768Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"peer"} expanded=false at=-1
+2026-10-03T10:48:04.768Z [DEBUG] hooks module hdr-view@inline ui.render settled in 6.4ms (worker hop, next() included) key=71b8eeba-d2c0-4128-af27-2a9e9ca267f9
+2026-10-03T10:48:04.769Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 3.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:48:04.807Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 39.6ms (worker hop, next() included)
+2026-10-03T10:48:04.807Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 7.6ms (worker hop, next() included)
+2026-10-03T10:48:04.811Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"peer"} expanded=false at=-1
+2026-10-03T10:48:04.812Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.9ms (worker hop, next() included) key=054be968-c4e9-4d07-9ebe-deb16973ce41
+2026-10-03T10:48:07.482Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 3.7ms (worker hop, next() included)
+2026-10-03T10:48:07.483Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 1.3ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:48:58.837Z [DEBUG] hooks module hdr-probe@inline prompt.edit settled in 14.1ms (worker hop, next() included)
+2026-10-03T10:48:58.846Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.847Z [DEBUG] hooks module hdr-view@inline ui.render settled in 4.2ms (worker hop, next() included) key=placeholder
+2026-10-03T10:48:58.848Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 4.9ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:48:58.886Z [DEBUG] hooks module hdr-probe@inline prompt.submit settled in 49.0ms (worker hop, next() included)
+2026-10-03T10:48:58.887Z [DEBUG] hooks module hdr-probe@inline turn.start settled in 6.9ms (worker hop, next() included)
+2026-10-03T10:48:58.890Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.890Z [DEBUG] hooks module hdr-view@inline ui.render settled in 0.7ms (worker hop, next() included) key=0f1d6d78-bcbd-42d6-90d8-6bf1b67d018c
+2026-10-03T10:48:58.905Z [DEBUG] plugin.register: hdr-probe (user, hdr-probe@inline), judged by core alone: admitted
+2026-10-03T10:48:58.909Z [DEBUG] $.process.spawn (hdr-probe): node stopped: the op was aborted
+2026-10-03T10:48:58.926Z [DEBUG] hooks module hdr-probe@inline reloaded in 21.1ms; events: turn.start,turn.complete,session.start,session.send,command.run,tool.call,prompt.edit,prompt.submit,ui.render
+2026-10-03T10:48:58.937Z [DEBUG] hooks worker: a promise a plugin did not await rejected: hdr-probe: $.process.spawn (not awaited): the plugin's environment was unloaded
+2026-10-03T10:48:58.940Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:48:58.940Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:48:58.940Z [DEBUG] hooks module hdr-probe@inline ui.render skipped: re-entry (the plugin's own code raised it; origin hdr-probe)
+2026-10-03T10:48:58.940Z [DEBUG] hooks module hdr-view@inline: ui.render nested in hdr-probe
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"plugin","name":"hdr-probe"} expanded=false at=37
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"peer"} expanded=false at=-1
+2026-10-03T10:48:58.942Z [DEBUG] [hdr-view] $.ui.log (to debug): hdr-view row: origin={"kind":"composer"} expanded=false at=-1
+2026-10-03T10:48:58.942Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.8ms (worker hop, next() included) key=ce18fb2a-11ec-4354-9028-7f61c9e44ba4
+2026-10-03T10:48:58.942Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.8ms (worker hop, next() included) key=02c11fed-e784-47a4-b822-95a6a1d885e7
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.7ms (worker hop, next() included) key=f01a82e5-df4d-4c30-b3da-898201848a70
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.7ms (worker hop, next() included) key=f5bcd4d3-c043-4886-9b66-e1a6f35792da
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.7ms (worker hop, next() included) key=7256381a-0a5f-44f0-ad39-25d1aff08c62
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.6ms (worker hop, next() included) key=fb6d9583-b923-4e27-a795-94a928524166
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.6ms (worker hop, next() included) key=054be968-c4e9-4d07-9ebe-deb16973ce41
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-view@inline ui.render settled in 2.6ms (worker hop, next() included) key=0f1d6d78-bcbd-42d6-90d8-6bf1b67d018c
+2026-10-03T10:48:58.943Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 2.6ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:48:58.943Z [DEBUG] $.tool.register (hdr-probe): mcp__hdr-probe__send unchanged and listed; not re-registered
+2026-10-03T10:48:58.946Z [DEBUG] $.process.run (hdr-probe): find with 5 args in /private/tmp/hdr-probe (pid 32394)
+2026-10-03T10:48:58.951Z [DEBUG] [hdr-probe] $.ui.log: reloaded (9 hooks: turn.start, turn.complete, session.start, session.send, command.run, tool.call, prompt.edit, prompt.submit, ui.render)
+2026-10-03T10:48:58.958Z [DEBUG] $.process.run (hdr-probe): find exited 0 in 13ms, 104 + 0 chars
+2026-10-03T10:48:58.958Z [DEBUG] $.process.run (hdr-probe): grep with 3 args in /private/tmp/hdr-probe (pid 32395)
+2026-10-03T10:48:58.961Z [DEBUG] $.process.run (hdr-probe): grep exited 1 in 3ms, 0 + 0 chars
+2026-10-03T10:48:58.962Z [DEBUG] $.process.spawn (hdr-probe): node with 5 args in /private/tmp/hdr-probe (pid 32396)
+2026-10-03T10:48:58.962Z [DEBUG] hooks module hdr-probe@inline session.start settled in 34.4ms (worker hop, next() included)
+2026-10-03T10:49:03.158Z [DEBUG] $.http.fetch (hdr-probe): POST http://127.0.0.1:8766/send
+2026-10-03T10:49:03.161Z [DEBUG] $.http.fetch (hdr-probe): 200 in 3ms, 2 chars
+2026-10-03T10:49:03.161Z [DEBUG] hooks module hdr-probe@inline session.send settled in 9.9ms (worker hop, next() included)
+2026-10-03T10:49:03.161Z [DEBUG] session.send to pi-alpha (model): a hook delivered it itself; hooked by hdr-probe; nothing sent
+2026-10-03T10:49:03.235Z [DEBUG] plugin-dir watch on /tmp/hdr-probe: active, polling every 400ms
+2026-10-03T10:49:03.235Z [DEBUG] plugin-dir watch on /tmp/hdr-view: active, polling every 400ms
+2026-10-03T10:49:05.405Z [DEBUG] hooks module hdr-probe@inline turn.complete settled in 2.3ms (worker hop, next() included)
+2026-10-03T10:49:05.410Z [DEBUG] hooks module hdr-probe@inline, hdr-view@inline ui.render settled in 1.6ms (worker hop, next() included) key=above-prompt
+2026-10-03T10:49:36.163Z [DEBUG] $.process.spawn (hdr-probe): node ended (SIGHUP) in 37202ms, 1 chunks

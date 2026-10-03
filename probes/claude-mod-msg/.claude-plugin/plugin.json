@@ -1,0 +1,1 @@
+{ "name": "hdr-probe2", "version": "0.1.0", "description": "Probe: /msg peer picker, hubless socket transport", "types": "./types/index.d.ts" }
