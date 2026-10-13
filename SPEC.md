@@ -57,19 +57,19 @@ Rejected options, with reasons in `SMOKES.md`:
     "session": "<session name or empty>", "sock": "<abs path>", "updatedAt": "<ISO-8601>" }
   ```
   The probes used `"kind": "cld"`. Standardize on `claude` in records and keep `cld` for tokens (§3.3).
-- **Writes:** writers write a temp file and rename it into place. Pi does this with `fs.renameSync`. The Claude mod has no `$.fs` rename, so it writes the temp file with `$.fs.write` and then runs `mv` through `$.process.run`. Readers skip any record that fails to parse in that round.
+- **Writes and ownership:** the shared Node inbox binds a private generation socket, writes its private record through a temp file and rename, then atomically publishes the pane's `.sock` and `.json` symlinks. Records optionally add `{pid,generation}` (the OS owner and private basename); older v1 records remain readable. Both targets are `0600`. Each generation closes/unlinks only its own targets, leaving harmless dangling aliases at exit; readers skip unreadable records. The inbox repairs lost aliases, records and listener paths every second. A superseded generation retires instead of republishing over its replacement.
 - **Lifecycle:**
 
 | Event | Claude mod | Pi extension | Status |
 |---|---|---|---|
-| start | `session.start`: start the inbox helper, write the record | `session_start`: listen, write the record in the listen callback | ✅ S17 |
-| rename | `command.run { command: "rename" }`, after `next(e)` → rewrite | `session_info_changed` → rewrite | ✅ S17 |
-| `/clear` (Claude) | **keep** the record (the process lives on; no `session.start` follows) | n/a | ✅ S17 |
-| new/resume/fork (Pi) | n/a | `session_shutdown` → remove; next `session_start` → recreate | 📄 |
-| exit | `session.end` with `reason !== "clear"` → `rm -f` the record and socket | `session_shutdown` (`quit`) → close the server, unlink both | ✅ S17 |
-| crash | file stays; a reader's ping is refused → **delete** the stale record and socket | same | ✅ filter S18; 🆕 delete |
+| start | `session.start`: start helper; it publishes after binding, then the mod supplies the name | `session_start`: await `listen()` with record and name | ✅ S17; lifecycle regressions |
+| rename | after `command.run` → helper's owner-checked `/session` | `session_info_changed` → inbox `setSession()` | ✅ S17 |
+| `/clear` or `/resume` (Claude) | **keep** inbox and record; reset turn state, refresh name after the command | n/a | lifecycle regressions |
+| new/resume/fork (Pi) | n/a | await `session_shutdown` close; next `session_start` recreates | 📄 |
+| exit | generation-checked `/close`; module unload also kills its helper | await inbox close | lifecycle regressions |
+| crash | failed ping skips; only a proven dead OS owner's generation targets are reaped | same | lifecycle regressions |
 
-- **Liveness:** `GET /ping` over the socket. If the connection is refused or the socket is missing, the peer is dead: skip it and delete its record and socket. Only ever delete inside your own workspace folder.
+- **Liveness:** `GET /ping` fresh for each scan (1.5 s timeout). A failed probe skips the peer; it is not proof that a live pane's inbox crashed. Readers never unlink canonical socket aliases. Managed private targets are reaped only when `kill(pid, 0)` proves their owner is dead. For legacy records without ownership metadata, only an absent pane's unchanged record is pruned; its socket is left for the next owner to replace. Unlabeled panes still count as present. Cleanup stays within this workspace.
 
 ### 3.3 Names and mention tokens
 - **Display name** = `clean(session) || clean(label) || pane`. `clean` strips control and bidi characters, collapses whitespace and caps at 80 characters. Port `clean_name` from `hdr-mcp/mcp/herdr_mcp.py`, including the `CONTROLS` regex.
@@ -142,7 +142,7 @@ claude/a2a-msg-view/                compact inbound rows
 | `prompt.submit` | find mentions; resolve them against `livePeers()`; add one `context` entry per peer (wording in §4.3); unknown tokens → `$.ui.toast("Not a peer in this workspace: …")` | ✅ S14 (🆕 toast) |
 | `session.send` | `to` (strip a leading `@`) matches a live peer's token or pane → `POST /msg` → `{ isDelivered: true }` or `{ isDelivered: false, reason }`; otherwise `next(e)`, leaving Claude↔Claude native | ✅ S11 S14 |
 | `command.run { command: "rename" }` | `const r = await next(e)`; rewrite the record; return `r` | ✅ S6 S17 |
-| `session.end` | if `e.reason !== "clear"`: `rm -f` the record and socket. This runs under a short shared time bound, so do nothing slow | ✅ S17 |
+| `session.end` | keep the inbox for `clear` and `resume`; otherwise request its generation-checked `/close` (1 s bound). Never unlink another generation's paths | lifecycle regressions |
 
 - **Helpers:** `sessionName`, `livePeers`, `writeRecord` and `deliver` must be **top-level `async function` declarations** that take `$` (validator rule, S1).
 - **State:** `update($, atom, fn)` from `"claude-code"`; `$.state.set` takes a `{ plugin, key }` reference.
@@ -233,11 +233,11 @@ pi/a2a-msg/
 ## 9. Where the build differs from §2–§7
 - **Shared code:** `claude/a2a-msg/hooks/core.ts` (pure) and `claude/a2a-msg/inbox.ts` (the Node HTTP inbox) are used by all three: the Claude mod, its helper (`node inbox.ts <sock> <kind> <pane>`, not `inbox.mjs`), and the Pi extension (by relative import; Pi loads local packages in place). Pi's inbox and Claude's helper are the same code.
 - **`GET /ping`** answers `{"v":1,"kind","pane"}`, without `session`: readers take the name from the record, and they check that the answering pane is the record's.
-- **Records** must also name the socket their pane implies (`<dir>/<safe(pane)>.sock`), or readers ignore them. Claude's record file is `0644` (`$.fs.write` sets no mode) inside the `0700` folder; Pi's is `0600`.
+- **Records** must name the socket their pane implies (`<dir>/<safe(pane)>.sock`), or readers ignore them. Both agents now publish `0600` targets through stable pane aliases. Optional `{pid,generation}` is validated before cleanup; generation names cannot traverse directories.
 - **Labels** are read from Herdr on every scan (picker, submit, send, completion), not once per picker open. Tokens resolve by token, by pane, or by an uncollided base token, so a token inserted before a peer collides still resolves, or fails with the list of suffixed tokens.
-- **Claude writes its record when the helper prints `{"ready":true}`**, so readers never ping a socket nobody listens on yet, which would get the record deleted as stale.
-- **Pings and sends time out** (1.5 s and 10 s): a fetch raced against an abortable `$.clock.sleep` in Claude, a socket timeout in Pi. Only a refused or missing socket counts as a crash.
-- **New: the nested-process guard** (`A2A_MSG_OWNER`). The owner token lives in `$.state` in Claude (survives hot reload) and is the PID in Pi. S28 and S29 verified it.
+- **The helper owns Claude's publication and recovery**, before printing `{"ready":true}`. The mod then supplies names over `/session`; `/session` and `/close` require that helper generation's opaque owner token. Old mods cannot rename or close their replacements.
+- **Pings and sends time out** (1.5 s and 10 s): a fetch raced against an abortable `$.clock.sleep` in Claude, a socket timeout in Pi. Refused/missing probes trigger only ownership-safe cleanup; timeouts never delete files. Messages are never retried.
+- **The nested-process guard** (`A2A_MSG_OWNER`) now uses `claude:<host PID>` in Claude and the PID in Pi. Claude's `$.state` survives hot reload only within a conversation; its owner value is a compatibility mirror, not authority. `node inbox.ts --identity` reports the host PID and whether the launch environment contained an inherited owner, enabling safe migration of runtime-set legacy UUIDs after `/clear` or `/resume`. It never outputs the environment. See `evidence/lifecycle-discovery.md`.
 - **Outside Herdr** (`HERDR_ENV` is not `1`) both sides do nothing, silently: that isn't a failure. Inside Herdr, an invalid identity, an overlong socket path or a nested process shows one notice.
 - **Pi `/msg`:** after `pasteToEditor`, `ctx.ui.setStatus("a2a-msg", undefined)` forces a redraw. Without it the inserted token stays invisible until the next keystroke (S16's "one read behind").
 - **Claude mid-turn rows** aren't expandable (S27); see the README's known limits.

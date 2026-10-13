@@ -8,7 +8,7 @@ declare module "claude-code" {
       peers: Peer[]
       /** True between turn.start and turn.complete: inbound messages then join the running turn. */
       running: boolean
-      /** This process's A2A_MSG_OWNER token; a process that inherits another token is nested and stays off. */
+      /** Compatibility mirror of the process-bound owner; session state is not ownership authority. */
       owner: string
     }
   }

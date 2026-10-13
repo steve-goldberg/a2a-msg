@@ -13,7 +13,7 @@ Direct peer messaging between Pi and Claude Code sessions in one Herdr workspace
 | Path | Role |
 |---|---|
 | `claude/a2a-msg/hooks/core.ts` | The shared contract, pure (no Node, no DOM): identity, paths, names and tokens, records, message validation, the texts models read. Imported by the mod, `inbox.ts` and the Pi extension |
-| `claude/a2a-msg/inbox.ts` | Node HTTP inbox (`GET /ping`, `POST /msg`). Pi calls `listen()` in-process; Claude spawns `node inbox.ts <sock> <kind> <pane>`, which prints `{"ready":true}`, then one JSON line per message |
+| `claude/a2a-msg/inbox.ts` | Generation-owned HTTP inbox, registry publication, repair and safe crash cleanup. Pi calls `listen()`; Claude spawns the helper (ready, then JSON messages) and supplies names over its owner-checked `/session` route |
 | `claude/a2a-msg/hooks/register.tsx` | Claude core mod: `session.start` (identity, `/msg`, inbox loop, record), picker `Pane`, `prompt.submit` context, `session.send` → socket (Pi tokens and panes only), rename, `session.end` |
 | `claude/a2a-msg/types/index.d.ts` | `$.state` contract (`peers`, `running`, `owner`). Must be self-contained |
 | `claude/a2a-msg-view/hooks/register.ts` | Second mod (the re-entry rule): compacts the core's `UserMessage` rows |
@@ -24,15 +24,15 @@ Direct peer messaging between Pi and Claude Code sessions in one Herdr workspace
 | `SPEC.md`, `SMOKES.md`, `HANDOFF.md`, `probes/`, `evidence/` | Design, live smokes S1–S30, the research handoff, research code and evidence |
 
 ## Protocol
-- **Registry:** `${A2A_MSG_DIR:-~/.local/state/a2a-msg}/<ws>/<pane>.json` and `.sock` (folder 0700, socket 0600). Record v1: `{v,kind:"pi"|"claude",pane,workspace,session,sock,updatedAt}`, written to a temp file and renamed. Readers accept only records of this workspace whose `sock` is the path its pane implies.
-- **Liveness:** ping times out at 1.5 s. A refused or missing socket deletes the record and socket, unless `updatedAt` changed in between; a timeout only skips the peer.
+- **Registry:** `${A2A_MSG_DIR:-~/.local/state/a2a-msg}/<ws>/<pane>.json` and `.sock` are aliases to generation-owned targets (folder 0700, targets 0600). Record v1 adds optional `{pid,generation}` to `{v,kind,pane,workspace,session,sock,updatedAt}`; readers still require this workspace and its canonical pane socket.
+- **Liveness:** ping times out at 1.5 s. Failed probes skip peers; managed targets are reaped only when their OS owner is dead. Legacy records are pruned only for absent panes with unchanged `updatedAt`; readers never unlink canonical sockets. Inboxes repair lost aliases/targets every second.
 - **`POST /msg`:** `{v,id,from:{kind,pane,name},text,sentAt}`. 400 for a bad body or control characters (only `\n` and `\t` allowed), 403 for another workspace, 413 for over 1 MiB. Senders never retry.
-- **`A2A_MSG_OWNER`:** a nested `claude -p`/`pi -p` inherits the pane, so a child seeing another owner stays off. The owner is the PID in Pi and a UUID in `$.state` in Claude.
+- **`A2A_MSG_OWNER`:** nested agents inherit the pane and stay off. Pi uses its PID; Claude uses `claude:<host PID>`, verified by the helper's `--identity`. `$.state` is session-scoped, so its owner value is only a compatibility mirror. Legacy UUIDs migrate only when absent from the process's launch environment (never log that environment).
 
 ## Commands
 ```sh
 npm install && npm run link-pi      # once
-npm test && npm run typecheck       # 19 node tests; strict tsc
+npm test && npm run typecheck       # node tests; strict tsc
 npx tsc -p claude/a2a-msg && npx tsc -p claude/a2a-msg-view    # needs .claude-plugin/types, laid by a load
 claude plugin validate claude/<mod> && claude plugin test claude/<mod>
 claude --plugin-dir "$PWD/claude/a2a-msg" --plugin-dir "$PWD/claude/a2a-msg-view"    # dev load, hot-reloads

@@ -3,9 +3,10 @@
 import assert from "node:assert/strict"
 import fs from "node:fs"
 import http from "node:http"
-import { after, before, test } from "node:test"
+import { after, before, mock, test } from "node:test"
+import { EventEmitter } from "node:events"
 import { makeRecord, messageBody, paths, type Message } from "../../claude/a2a-msg/hooks/core.ts"
-import { listen } from "../../claude/a2a-msg/inbox.ts"
+import { listen, type Inbox } from "../../claude/a2a-msg/inbox.ts"
 import a2aMsg from "./index.ts"
 
 const ROOT = fs.mkdtempSync("/tmp/a2a-pi-")
@@ -105,6 +106,91 @@ test("a process started by another agent's tools in the same pane stays off, wit
   }
 })
 
+test("a failed startup probe must not unlink an inbox that has since started", async () => {
+  const pane = "w1:p2" // still present in Herdr, as a newly starting peer would be
+  const p = paths(ROOT, pane)
+  fs.mkdirSync(p.dir, { recursive: true })
+  fs.writeFileSync(p.record, JSON.stringify(makeRecord("claude", { pane, workspace: "w1" }, "late", p.sock)))
+  const { pi, commands } = fakePi()
+  a2aMsg(pi)
+  let server: Inbox | undefined
+  const original = http.request
+  let first = true
+  const probe = mock.method(http, "request", (options: any, callback: any) => {
+    if (first && options.socketPath === p.sock && options.path === "/ping") {
+      first = false
+      // The probe failed before the helper bound. Deliver that failure only after
+      // the helper starts, but before its ready event rewrites the old record.
+      const req = new EventEmitter() as EventEmitter & { end(): void }
+      req.end = () => {
+        void listen(p.sock, "claude", pane, () => {}).then(s => {
+          server = s
+          req.emit("error", Object.assign(new Error("probe saw the startup gap"), { code: "ENOENT" }))
+        })
+      }
+      return req
+    }
+    return original(options, callback)
+  })
+  try {
+    await commands.msg.handler("", fakeCtx().ctx)
+    probe.mock.restore()
+    assert.equal(fs.existsSync(p.sock), true, "a reader must not unlink a newly listening peer")
+    assert.equal(fs.existsSync(p.record), true, "keep the registration while its pane still exists")
+    const { ctx, selects } = fakeCtx()
+    await commands.msg.handler("", ctx)
+    assert.deepEqual(selects, [["Message a Claude peer", ["late  Claude · w1:p2"]]])
+  } finally {
+    probe.mock.restore()
+    await server?.close()
+    fs.rmSync(p.record, { force: true })
+    fs.rmSync(p.sock, { force: true })
+    delete process.env.A2A_MSG_OWNER
+  }
+})
+
+test("a Claude peer started after Pi is discovered without reloading Pi", async () => {
+  const { pi, handlers, commands } = fakePi()
+  const { ctx, selects, notes } = fakeCtx()
+  a2aMsg(pi)
+  let late: Awaited<ReturnType<typeof peer>> | undefined
+  try {
+    await handlers.session_start({}, ctx)
+    await commands.msg.handler("", ctx)
+    assert.deepEqual(notes.at(-1), ["No live Claude peers in this Herdr workspace.", "info"])
+    late = await peer("w1:p3", "claude", "late")
+    await commands.msg.handler("", ctx)
+    assert.deepEqual(selects, [["Message a Claude peer", ["late  Claude · w1:p3"]]])
+  } finally {
+    await handlers.session_shutdown({ reason: "quit" })
+    await late?.close()
+    fs.rmSync(paths(ROOT, "w1:p3").record, { force: true })
+    delete process.env.A2A_MSG_OWNER
+  }
+})
+
+test("an old Pi runtime shutting down leaves its replacement discoverable and receiving", async () => {
+  const old = fakePi("old")
+  const replacement = fakePi("new")
+  a2aMsg(old.pi)
+  a2aMsg(replacement.pi)
+  const own = paths(ROOT, ME)
+  try {
+    await old.handlers.session_start({}, fakeCtx().ctx)
+    await replacement.handlers.session_start({}, fakeCtx().ctx)
+    await old.handlers.session_shutdown({ reason: "quit" })
+    assert.equal(fs.existsSync(own.sock), true, "old shutdown must not unlink the replacement socket")
+    assert.equal(JSON.parse(fs.readFileSync(own.record, "utf8")).session, "new")
+    assert.equal((await post(own.sock, "/msg", messageBody({ kind: "claude", pane: "w1:p3", name: "lead" }, "new runtime", "reload"))).status, 200)
+    assert.equal(old.sent.length, 0)
+    assert.equal(replacement.sent.length, 1)
+  } finally {
+    await old.handlers.session_shutdown({ reason: "quit" })
+    await replacement.handlers.session_shutdown({ reason: "quit" })
+    delete process.env.A2A_MSG_OWNER
+  }
+})
+
 test("lifecycle, /msg, @ completion, mentions, send_message, inbound, renderer, stale peers", async () => {
   const lead = await peer("w1:p3", "claude", "lead")
   const files = await peer("w1:p2", "pi", "")
@@ -168,12 +254,12 @@ test("lifecycle, /msg, @ completion, mentions, send_message, inbound, renderer, 
     rename("pi-two")
     handlers.session_info_changed({ name: "pi-two" }, ctx)
     assert.equal(JSON.parse(fs.readFileSync(own.record, "utf8")).session, "pi-two")
-    handlers.session_shutdown({ reason: "quit" }, ctx)
+    await handlers.session_shutdown({ reason: "quit" }, ctx)
     assert.equal(fs.existsSync(own.record) || fs.existsSync(own.sock), false)
   } finally {
-    handlers.session_shutdown?.({ reason: "quit" })
-    lead.close()
-    files.close()
+    await handlers.session_shutdown?.({ reason: "quit" })
+    await lead.close()
+    await files.close()
     delete process.env.A2A_MSG_OWNER
   }
 })

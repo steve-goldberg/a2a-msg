@@ -3,12 +3,13 @@
 
 export type Kind = "pi" | "claude"
 export type Identity = { pane: string; workspace: string }
-export type PeerRecord = { v: 1; kind: Kind; pane: string; workspace: string; session: string; sock: string; updatedAt: string }
+export type PeerRecord = { v: 1; kind: Kind; pane: string; workspace: string; session: string; sock: string; updatedAt: string; pid?: number; generation?: string }
 export type Peer = { kind: Kind; pane: string; sock: string; name: string; token: string }
 export type Message = { v: 1; id: string; from: { kind: Kind; pane: string; name: string }; text: string; sentAt: string }
 export type Inbound = { status: 200; message: Message } | { status: 400 | 403 | 413; error: string }
 
 export const PANE_ID = /^w\w+:p\w+$/
+export const GENERATION = /^\.[A-Za-z0-9_-]{8}$/
 export const MAX_BODY = 1024 * 1024
 export const MAX_SOCK_BYTES = 100
 export const KIND_LABEL: Record<Kind, string> = { pi: "Pi", claude: "Claude" }
@@ -99,15 +100,18 @@ export function parseRecord(text: string, workspace: string, root: string): Peer
   if (!r || r.v !== 1 || !KINDS.has(r.kind) || !isText(r.pane) || !PANE_ID.test(r.pane)) return undefined
   if (r.workspace !== workspace || workspaceOf(r.pane) !== workspace || !isText(r.session) || !isText(r.updatedAt)) return undefined
   try { if (r.sock !== paths(root, r.pane).sock) return undefined } catch { return undefined }
-  return { v: 1, kind: r.kind, pane: r.pane, workspace, session: r.session, sock: r.sock, updatedAt: r.updatedAt }
+  if ((r.pid !== undefined || r.generation !== undefined) && (!Number.isSafeInteger(r.pid) || r.pid <= 0 || !isText(r.generation) || !GENERATION.test(r.generation))) return undefined
+  return { v: 1, kind: r.kind, pane: r.pane, workspace, session: r.session, sock: r.sock, updatedAt: r.updatedAt,
+    ...(r.generation === undefined ? {} : { pid: r.pid, generation: r.generation }) }
+
 }
 
-/** Herdr pane labels from `herdr pane list --workspace <ws>` JSON output; throws on any other shape. */
+/** Herdr panes and labels; unlabeled panes keep an empty value so presence is not lost. */
 export function parseLabels(stdout: string): Record<string, string> {
   const panes = JSON.parse(stdout)?.result?.panes
   if (!Array.isArray(panes)) throw new Error("herdr pane list returned no result.panes")
   const labels: Record<string, string> = {}
-  for (const p of panes) if (isText(p?.pane_id) && isText(p?.label) && p.label) labels[p.pane_id] = p.label
+  for (const p of panes) if (isText(p?.pane_id) && PANE_ID.test(p.pane_id)) labels[p.pane_id] = isText(p.label) ? p.label : ""
   return labels
 }
 

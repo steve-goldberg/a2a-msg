@@ -83,9 +83,17 @@ test("records: written v1, parsed only for this workspace and the pane's own soc
   assert.equal(parseRecord(JSON.stringify({ ...r, pane: "w2:p3", workspace: "w1" }), "w1", ROOT), undefined)
 })
 
+test("generation metadata is optional for v1 records but must be a safe PID and private basename", () => {
+  const r = { ...rec("w1:p3", "pi"), pid: 123, generation: ".abcdefgh" }
+  assert.deepEqual(parseRecord(JSON.stringify(r), "w1", ROOT), r)
+  for (const bad of [{ pid: 0 }, { pid: -1 }, { pid: 1.5 }, { generation: "../other" }, { generation: "" }, { pid: undefined }]) {
+    assert.equal(parseRecord(JSON.stringify({ ...r, ...bad }), "w1", ROOT), undefined)
+  }
+})
+
 test("labels from herdr pane list; anything else throws", () => {
   const out = JSON.stringify({ result: { panes: [{ pane_id: "w1:p1", label: "Files" }, { pane_id: "w1:p2" }, { pane_id: "w1:p3", label: "" }] } })
-  assert.deepEqual(parseLabels(out), { "w1:p1": "Files" })
+  assert.deepEqual(parseLabels(out), { "w1:p1": "Files", "w1:p2": "", "w1:p3": "" })
   assert.throws(() => parseLabels("{}"), /no result.panes/)
   assert.throws(() => parseLabels("nope"))
 })

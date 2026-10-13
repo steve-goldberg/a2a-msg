@@ -13,11 +13,11 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 import { Box, Text, type AutocompleteItem, type AutocompleteProvider } from "@earendil-works/pi-tui"
 import { Type } from "typebox"
 import {
-  baseToken, compactLine, displayName, identity, inboundText, isPong, KIND_LABEL, makeRecord, matchPeers, mentionContext,
+  baseToken, compactLine, displayName, identity, inboundText, isPong, KIND_LABEL, matchPeers, mentionContext,
   mentions, messageBody, parseLabels, parseRecord, paths, registryRoot, toPeers, type Identity, type Message, type Peer,
   type PeerRecord,
 } from "../../claude/a2a-msg/hooks/core.ts"
-import { listen } from "../../claude/a2a-msg/inbox.ts"
+import { listen, reap, type Inbox } from "../../claude/a2a-msg/inbox.ts"
 
 const SEND_WITH = "use the send_message tool"
 const PING_MS = 1500
@@ -99,38 +99,36 @@ export default function a2aMsg(pi: ExtensionAPI) {
     return
   }
 
-  let server: http.Server | undefined
+  let server: Inbox | undefined
   let ui: ExtensionContext["ui"] | undefined
   const warned = new Set<string>()
 
-  const writeRecord = () => {
-    const tmp = `${own.record}.${process.pid}.tmp`
-    fs.writeFileSync(tmp, JSON.stringify(makeRecord("pi", me, pi.getSessionName() ?? "", own.sock)), { mode: 0o600 })
-    fs.renameSync(tmp, own.record)
-  }
-  const stop = () => {
-    server?.close()
+  const writeRecord = () => server?.setSession(pi.getSessionName() ?? "")
+  const stop = async () => {
+    const previous = server
     server = undefined
-    fs.rmSync(own.record, { force: true })
-    fs.rmSync(own.sock, { force: true })
+    await previous?.close()
   }
 
-  // A peer whose socket refuses or is gone has crashed: delete its files, unless it rewrote its record meanwhile.
+  // A failed probe is not proof of a crash while the pane still exists. Readers never unlink
+  // socket paths: that can strand a live listener between bind and publication.
   const removeStale = (r: PeerRecord) => {
     const file = paths(root, r.pane).record
     let now: PeerRecord | undefined
     try { now = parseRecord(fs.readFileSync(file, "utf8"), me.workspace, root) } catch { return }
     if (now?.updatedAt !== r.updatedAt) return
     fs.rmSync(file, { force: true })
-    fs.rmSync(r.sock, { force: true })
   }
-  const alive = async (r: PeerRecord) => {
+  const alive = async (r: PeerRecord, labels: Record<string, string>) => {
     try {
       const res = await request(r.sock, "GET", "/ping", undefined, PING_MS)
       return res.status === 200 && isPong(res.text, r)
     } catch (err) {
       const code = (err as NodeJS.ErrnoException).code
-      if (code === "ECONNREFUSED" || code === "ENOENT") removeStale(r)
+      if (code === "ECONNREFUSED" || code === "ENOENT") {
+        if (r.generation) reap(r)
+        else if (!Object.hasOwn(labels, r.pane)) removeStale(r)
+      }
       return false
     }
   }
@@ -144,7 +142,7 @@ export default function a2aMsg(pi: ExtensionAPI) {
         .flatMap(text => parseRecord(text, me.workspace, root) ?? [])
         .filter(r => r.pane !== me.pane)
       : []
-    const live = (await Promise.all(records.map(async r => ((await alive(r)) ? r : undefined)))).filter(r => r !== undefined)
+    const live = (await Promise.all(records.map(async r => ((await alive(r, labels)) ? r : undefined)))).filter(r => r !== undefined)
     return { peers: toPeers(live, labels), myName: displayName(pi.getSessionName(), labels[me.pane], me.pane) }
   }
 
@@ -174,11 +172,13 @@ export default function a2aMsg(pi: ExtensionAPI) {
   pi.on("session_start", async (_e, ctx) => {
     ui = ctx.ui
     try {
-      stop()
-      server = await listen(own.sock, "pi", me.pane, deliver)
-      writeRecord()
+      await stop()
+      server = await listen(own.sock, "pi", me.pane, deliver, {
+        record: own.record, session: pi.getSessionName() ?? "",
+        onError: err => ctx.ui.notify(`a2a-msg is off: ${err.message}`, "error"),
+      })
     } catch (err) {
-      stop()
+      await stop()
       ctx.ui.notify(`a2a-msg is off: ${(err as Error).message}`, "error")
       return
     }

@@ -8,7 +8,7 @@
 import { atom, read, update } from "claude-code"
 import type { EngineInterface, Register } from "claude-code"
 import {
-  baseToken, compactLine, displayName, identity, inboundText, isPong, KIND_LABEL, makeRecord, matchPeers, mentionContext,
+  baseToken, compactLine, displayName, identity, inboundText, isPong, KIND_LABEL, matchPeers, mentionContext,
   mentions, messageBody, PANE_ID, parseLabels, parseRecord, paths, registryRoot, toPeers, type Identity, type Message,
   type Peer, type PeerRecord,
 } from "./core.ts"
@@ -21,7 +21,7 @@ const peersAtom = atom({ plugin: "a2a-msg", key: "peers" } as const, [] as Peer[
 const runningRef = { plugin: "a2a-msg", key: "running" } as const
 const ownerRef = { plugin: "a2a-msg", key: "owner" } as const
 
-type Env = { me: Identity; root: string; own: ReturnType<typeof paths> }
+type Env = { me: Identity; root: string; own: ReturnType<typeof paths>; generation: string; closing: boolean }
 // Set by session.start (which every load and reload runs); a /clear keeps the module, so it stays.
 let env: Env | undefined
 let session = ""
@@ -36,12 +36,17 @@ async function setup($: EngineInterface): Promise<Env | undefined> {
   const root = registryRoot({ A2A_MSG_DIR: await $.env.get("A2A_MSG_DIR"), HOME: await $.env.get("HOME") })
   // HERDR_PANE_ID is inherited: a `claude` or `pi` started by this pane's agent must not take its pane.
   const owner = await $.env.get("A2A_MSG_OWNER")
-  const { value: mine } = await $.state.get(ownerRef)
-  if (owner && owner !== mine) throw new Error(`pane ${me.pane} belongs to the agent that started this process`)
-  const token = mine ?? crypto.randomUUID()
+  const host = await $.process.run(["node", `${$.plugin.root}/inbox.ts`, "--identity"])
+  if (host.exitCode !== 0) throw new Error("could not establish the host process identity")
+  const info = JSON.parse(host.stdout)
+  if (!Number.isSafeInteger(info.pid) || info.pid <= 0 || typeof info.inheritedOwner !== "boolean") throw new Error("invalid host process identity")
+  const token = `claude:${info.pid}`
+  if (owner && owner !== token && info.inheritedOwner) throw new Error(`pane ${me.pane} belongs to the agent that started this process`)
+  // Process identity survives /clear and /resume; $.state does not. Keep only a compatibility
+  // mirror in state, never use it as proof that this process owns the pane.
   await $.state.set(ownerRef, token)
   await $.env.set("A2A_MSG_OWNER", token)
-  return { me, root, own: paths(root, me.pane) }
+  return { me, root, own: paths(root, me.pane), generation: crypto.randomUUID(), closing: false }
 }
 
 /** The session's name: the last custom-title row of its transcript (too big for $.fs.read). */
@@ -63,13 +68,12 @@ async function sessionName($: EngineInterface): Promise<string> {
   return ""
 }
 
-/** Writes this pane's record: a temp file moved into place, so readers never see half of one. */
+/** The helper owns publication and repair; the mod only supplies the current session name. */
 async function writeRecord($: EngineInterface, e: Env) {
-  session = await sessionName($)
-  const tmp = `${e.own.record}.tmp`
-  await $.fs.write(tmp, JSON.stringify(makeRecord("claude", e.me, session, e.own.sock)))
-  const mv = await $.process.run(["mv", "-f", tmp, e.own.record])
-  if (mv.exitCode !== 0) throw new Error(`mv ${tmp}: ${mv.stderr.trim()}`)
+  const name = await sessionName($)
+  const res = await call($, e.own.sock, "/session", SEND_MS, JSON.stringify({ owner: e.generation, session: name }))
+  if (!res.ok) throw new Error(`inbox session update: HTTP ${res.status} ${res.text}`)
+  session = name
 }
 
 /** One request over a peer's socket; rejects after `ms` (a stopped peer never answers). */
@@ -87,21 +91,26 @@ async function call($: EngineInterface, sock: string, path: string, ms: number, 
   }
 }
 
-/** A crashed peer (refused, or its socket gone): delete its files, unless it rewrote its record meanwhile. */
+/** Prune an absent pane's unchanged record only. Socket lifecycle belongs to its inbox. */
 async function removeStale($: EngineInterface, e: Env, r: PeerRecord) {
+  if (r.generation) {
+    const reaped = await $.process.run(["node", `${$.plugin.root}/inbox.ts`, "--reap", e.root, e.me.workspace, JSON.stringify(r)])
+    if (reaped.exitCode !== 0) throw new Error(`inbox cleanup: ${reaped.stderr.trim()}`)
+    return
+  }
   const file = paths(e.root, r.pane).record
   let now: PeerRecord | undefined
   try { now = parseRecord(await $.fs.read(file), e.me.workspace, e.root) } catch { return }
   if (now?.updatedAt !== r.updatedAt) return
-  await $.process.run(["rm", "-f", file, r.sock])
+  await $.process.run(["rm", "-f", file])
 }
 
-async function alive($: EngineInterface, e: Env, r: PeerRecord): Promise<boolean> {
+async function alive($: EngineInterface, e: Env, r: PeerRecord, labels: Record<string, string>): Promise<boolean> {
   try {
     const res = await call($, r.sock, "/ping", PING_MS)
     return res.ok && isPong(res.text, r)
   } catch (err) {
-    if (/ECONNREFUSED|ENOENT/.test(errorText(err))) await removeStale($, e, r)
+    if (/ECONNREFUSED|ENOENT/.test(errorText(err)) && (r.generation || !Object.hasOwn(labels, r.pane))) await removeStale($, e, r)
     return false
   }
 }
@@ -114,14 +123,14 @@ async function scan($: EngineInterface, e: Env): Promise<{ peers: Peer[]; labels
   const records: PeerRecord[] = []
   if (await $.fs.exists(e.own.dir)) {
     for (const f of await $.fs.list(e.own.dir)) {
-      if (f.kind !== "file" || !f.name.endsWith(".json")) continue
+      if ((f.kind !== "file" && !f.isLink) || !f.name.endsWith(".json")) continue
       let text: string
       try { text = await $.fs.read(`${e.own.dir}/${f.name}`) } catch { continue } // removed since listed
       const r = parseRecord(text, e.me.workspace, e.root)
       if (r?.kind === "pi") records.push(r)
     }
   }
-  const live = await Promise.all(records.map(r => alive($, e, r)))
+  const live = await Promise.all(records.map(r => alive($, e, r, labels)))
   return { peers: toPeers(records.filter((_, i) => live[i]), labels), labels }
 }
 
@@ -134,9 +143,9 @@ async function receive($: EngineInterface, m: Message) {
   $.ui.log(compactLine(baseToken(m.from.kind, m.from.name, m.from.pane), m.text))
 }
 
-/** Runs the inbox helper for the module's life; the record is written once it listens. */
+/** Runs the generation-owned helper for the module's life. It publishes once listening. */
 async function runInbox($: EngineInterface, e: Env) {
-  const inbox = $.process.spawn({ argv: ["node", `${$.plugin.root}/inbox.ts`, e.own.sock, "claude", e.me.pane] })
+  const inbox = $.process.spawn({ argv: ["node", `${$.plugin.root}/inbox.ts`, e.own.sock, "claude", e.me.pane, e.generation] })
   let buf = ""
   for await (const { stream, text } of inbox) {
     if (stream === "stderr") { $.ui.log(`a2a-msg inbox: ${text.trim()}`); continue }
@@ -153,7 +162,7 @@ async function runInbox($: EngineInterface, e: Env) {
     }
   }
   const { code, signal } = await inbox.result
-  $.ui.log(`a2a-msg is off: the inbox stopped (${signal ?? `exit ${code}`})`)
+  if (!e.closing) $.ui.log(`a2a-msg is off: the inbox stopped (${signal ?? `exit ${code}`})`)
 }
 
 export const register: Register = on => {
@@ -177,15 +186,23 @@ export const register: Register = on => {
     return started
   })
 
-  on("command.run", { command: "rename" }, async ($, e, next) => {
+  on("command.run", async ($, e, next) => {
     const r = await next(e)
-    if (env) await writeRecord($, env).catch(err => $.ui.log(`a2a-msg: ${errorText(err)}`))
+    if (env && ["rename", "clear", "resume"].includes(e.command)) await writeRecord($, env).catch(err => $.ui.log(`a2a-msg: ${errorText(err)}`))
     return r
   })
 
-  // /clear ends the conversation, not the process: the record stays then.
+  // /clear and /resume replace the conversation, not the process or its inbox.
   on("session.end", async ($, e, next) => {
-    if (env && e.reason !== "clear") await $.process.run(["rm", "-f", env.own.record, env.own.sock])
+    await $.state.set(runningRef, false)
+    if (env && e.reason !== "clear" && e.reason !== "resume") {
+      const current = env
+      current.closing = true
+      try {
+        const res = await call($, current.own.sock, "/close", 1000, JSON.stringify({ owner: current.generation }))
+        if (!res.ok) $.ui.log(`a2a-msg inbox close: HTTP ${res.status} ${res.text}`)
+      } catch (err) { $.ui.log(`a2a-msg inbox close: ${errorText(err)}`) }
+    }
     return next(e)
   })
 
