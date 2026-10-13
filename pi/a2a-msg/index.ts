@@ -238,6 +238,7 @@ export default function a2aMsg(pi: ExtensionAPI) {
   })
 
   pi.on("before_agent_start", async (event, ctx) => {
+    if (event.messageType === "custom") return
     const tokens = mentions(event.prompt)
     if (!tokens.length) return
     let peers: Peer[]

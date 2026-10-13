@@ -230,6 +230,24 @@ test("a receipt is visible while the real SDK still queues its model message beh
   }
 })
 
+test("custom-message runs skip user mention resolution without a prompt", async () => {
+  const { pi, handlers } = fakePi()
+  const { ctx, notes } = fakeCtx()
+  a2aMsg(pi)
+  try {
+    for (const customType of ["a2a-msg", "subagent-wake"]) {
+      const result = await handlers.before_agent_start({
+        type: "before_agent_start", messageType: "custom", systemPrompt: "",
+        message: { role: "custom", customType, content: "@pi-gone: peer content", display: false, timestamp: Date.now() },
+      }, ctx)
+      assert.equal(result, undefined, "custom content must not be resolved as a user prompt")
+    }
+    assert.deepEqual(notes, [], "custom runs must not warn about peer mentions")
+  } finally {
+    delete process.env.A2A_MSG_OWNER
+  }
+})
+
 test("lifecycle, /msg, @ completion, mentions, send_message, inbound, renderer, stale peers", async () => {
   const lead = await peer("w1:p3", "claude", "lead")
   const files = await peer("w1:p2", "pi", "")
@@ -260,12 +278,15 @@ test("lifecycle, /msg, @ completion, mentions, send_message, inbound, renderer, 
     assert.deepEqual(provider.applyCompletion(["ask @"], 0, 5, got.items[0], "@"), { lines: ["ask @pi-Files "], cursorLine: 0, cursorCol: 14 })
 
     // a mention adds hidden context for live peers; unknown ones warn
-    const ctxResult = await handlers.before_agent_start({ prompt: "@cld-lead and @pi-gone: status?" }, ctx)
+    const ctxResult = await handlers.before_agent_start({ messageType: "user", prompt: "@cld-lead and @pi-gone: status?" }, ctx)
     assert.equal(ctxResult.message.customType, "a2a-msg-mention")
     assert.equal(ctxResult.message.display, false)
     assert.match(ctxResult.message.content, /^@cld-lead is a Claude session in this Herdr workspace \(pane w1:p3\)\. To message it, use the send_message tool with to: "cld-lead"\./)
     assert.deepEqual(notes.at(-1), ["Not a peer in this Herdr workspace: @pi-gone", "warning"])
-    assert.equal(await handlers.before_agent_start({ prompt: "no mentions" }, ctx), undefined)
+    assert.equal(await handlers.before_agent_start({ messageType: "user", prompt: "no mentions" }, ctx), undefined)
+    // Pi before 1.2 has no messageType; its user mentions must still resolve.
+    const legacyResult = await handlers.before_agent_start({ prompt: "@cld-lead: status?" }, ctx)
+    assert.deepEqual(legacyResult, ctxResult)
 
     // send_message reaches the peer's inbox under this session's display name (Herdr label: no session name yet)
     const r = await tools.send_message.execute("id", { to: "cld-lead", message: "the build is green" })
