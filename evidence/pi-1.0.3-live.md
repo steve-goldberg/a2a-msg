@@ -1,6 +1,6 @@
 # Pi 1.0.3 install and live verification — 2026-10-05
 
-Performed from `w24:pH`, with user approval to update, install, test and commit the Pi side.
+Performed from `w24:pH`, with user approval to update, install, test and commit the Pi side. Personal checkout paths below are replaced with portable equivalents; shell commands assume the checkout root.
 
 ## Development tooling
 
@@ -17,15 +17,15 @@ Performed from `w24:pH`, with user approval to update, install, test and commit 
 Ran:
 
 ```sh
-pi install /absolute/path/to/a2a-msg/pi/a2a-msg
+pi install "$PWD/pi/a2a-msg"
 pi list
 ```
 
-Pi confirmed the install and listed the package under **User packages**. It stores the source as `../../path/to/a2a-msg/pi/a2a-msg`, relative to `~/.pi/agent/`. No Pi application update, MCP removal or Claude config change was performed.
+Pi confirmed the install and listed the package under **User packages**. It stores the local package path relative to `~/.pi/agent/`. No Pi application update, MCP removal or Claude config change was performed.
 
 ## Live smoke
 
-Created test tab `w24:tD` in the caller's own workspace, with cwd `/absolute/path/to/a2a-msg`:
+Created test tab `w24:tD` in the caller's own workspace, with the repository root as its working directory:
 
 - Pi **1.0.3**, pane `w24:pK`: `pi --no-session --name a2a-pi103 --thinking low --offline`.
 - Claude Code **2.1.289**, pane `w24:pM`: plain `claude`, then `/rename a2a-claude103`.

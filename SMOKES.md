@@ -175,7 +175,7 @@ A `$` trigger in the band works (`ask $` → band `@hdr-pi-alpha  w9:p1`), and s
 ```
 ↓↓ and Enter → `ctx.ui.pasteToEditor("@pi-alpha ")`, and the editor showed `@pi-alpha ` with typing continuing after it. The screen lagged one read behind.
 
-## S17: lifecycle with real Claude + real Pi ✅ (⚠️ ran in workspace w27 "other-workspace" by mistake)
+## S17: lifecycle with real Claude + real Pi ✅ (⚠️ ran in another workspace, w27, by mistake; private label omitted)
 
 | Step | Registry folder |
 |---|---|

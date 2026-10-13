@@ -4,7 +4,7 @@
 
 **From:** session `claudemods` (hdr-mcp research), 2026-10-03.
 **To:** `a2a-msg-build1`.
-**Repo:** `<checkout>`. It is not a git repo yet; ask the user before `git init`.
+**Repo:** the a2a-msg checkout. At the time of this handoff, it was not yet a Git repository.
 
 ## Read in this order
 1. This file.
@@ -39,7 +39,7 @@ Peer messaging between Pi and Claude Code sessions in the same Herdr workspace: 
 6. **Install docs and steps** for both sides. Show the user before changing any global config (`CLAUDE_CODE_PLUGIN_DIRS`, Pi global packages).
 
 ## Hard rules for this work
-- **Own Herdr workspace only.** Always run `herdr tab create --workspace "${HERDR_PANE_ID%%:*}" …` and `herdr pane list --workspace …`. Never touch, read or reuse other workspaces' panes or labels. The user flagged this twice; tabs once landed in "other-workspace".
+- **Own Herdr workspace only.** Always run `herdr tab create --workspace "${HERDR_PANE_ID%%:*}" …` and `herdr pane list --workspace …`. Never touch, read or reuse other workspaces' panes or labels. The user flagged this twice; tabs once landed in another workspace.
 - **User's global rules** (`~/.claude/CLAUDE.md`): fail fast, with no silent fallbacks; read files before changing them; check APIs exist (grep the types); run the code; keep it simple; no secrets in logs.
 - **Never read `~/.claude/sessions/*`**, and don't read a Claude pane right after posting into its native inbox socket. The classifier blocks both as credential exploration.
 - **The mods API is early access.** The running build's `types/claude-code.d.ts`, named by the `plugin-authoring` skill, is the authority. Load that skill first. Its dev-mods folder triggers a one-time "Enable hot reloading?" question for the user; `--plugin-dir` avoids it.

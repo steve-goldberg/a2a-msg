@@ -38,15 +38,22 @@ HANDOFF.md probes/ evidence/   the research handoff, probe code and evidence it 
 
 ## Status
 
-Built and verified live on 2026-10-03 (Claude Code 2.1.288, Pi 1.0.0): Pi→Pi, Claude→Pi and Pi→Claude, idle and mid-turn, plus the registry lifecycle, crash cleanup, name collisions and the nested-process guard. See `SMOKES.md` S19–S30. Decided on 2026-10-03: the global install waits (use `--plugin-dir` / `pi -e`), the old `hdr` MCP stays for now (D5), and the native-inbox test is skipped (D6).
+Verified live with Pi→Pi, Claude→Pi and Pi→Claude, idle and mid-turn, plus registry lifecycle, crash cleanup, name collisions and the nested-process guard. See `SMOKES.md` S19–S30 and `evidence/pi-1.0.3-live.md`. Version 0.2.0 adds generation-safe cleanup, automatic listener recovery and ownership that survives Claude conversation changes; see `evidence/lifecycle-discovery.md`.
 
 ## Install
 
-Nothing below has been run on your config yet. Each step changes global config, so apply it yourself, or ask Claude to apply it.
+Two separate native installs, one per agent. A Herdr plugin can't host either side and has no install or uninstall hook into Pi or Claude (`SPEC.md` §8). Each step changes your agent's global config, so apply it yourself or approve your agent doing it.
+
+Clone the repository, then run the commands below from its root:
+
+```sh
+git clone https://github.com/steve-goldberg/a2a-msg.git
+cd a2a-msg
+```
 
 **Requirements:** Herdr, Node 22.18 or later on `PATH` (the Claude helper runs `node inbox.ts` with built-in type stripping), Claude Code 2.1.288 or later, Pi 1.0.0 or later.
 
-**Claude Code: every session.** Add both mod folders to the `env` block of `~/.claude/settings.json`:
+**Claude Code: every session.** Add both mod folders to the `env` block of `~/.claude/settings.json`. Replace `/absolute/path/to/a2a-msg` with your checkout's absolute path (`pwd`):
 
 ```json
 "CLAUDE_CODE_PLUGIN_DIRS": "/absolute/path/to/a2a-msg/claude/a2a-msg:/absolute/path/to/a2a-msg/claude/a2a-msg-view"
@@ -57,7 +64,7 @@ The first session in a new project folder may ask whether to trust it.
 **Pi: every session.** Run:
 
 ```sh
-pi install /absolute/path/to/a2a-msg/pi/a2a-msg
+pi install "$PWD/pi/a2a-msg"
 ```
 
 This writes the path to `~/.pi/agent/settings.json`. Pi loads the package in place, so edits here take effect on the next start or `/reload`.
@@ -69,7 +76,7 @@ claude --plugin-dir "$PWD/claude/a2a-msg" --plugin-dir "$PWD/claude/a2a-msg-view
 pi -e "$PWD/pi/a2a-msg/index.ts"
 ```
 
-**Uninstall:** remove the `CLAUDE_CODE_PLUGIN_DIRS` entry, and run `pi remove /absolute/path/to/a2a-msg/pi/a2a-msg`.
+**Uninstall:** remove these two mod paths from `CLAUDE_CODE_PLUGIN_DIRS`, keeping any other plugin paths. From the same checkout, run `pi remove "$PWD/pi/a2a-msg"`.
 
 ## How it works
 

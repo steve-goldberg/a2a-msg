@@ -247,4 +247,4 @@ pi/a2a-msg/
 - **Claude Code cross-session messaging:** https://code.claude.com/docs/en/cross-session-messaging.md (verified: typeahead, delivery, inbox socket, inbound controls).
 - **Mods API:** the `plugin-authoring` skill and its `reference.md` and `types/claude-code.d.ts` for the running build. The API is early access and changes between releases. An agent cited `https://code.claude.com/docs/en/plugins/mods/api`, but it was never opened first-hand.
 - **Pi:** `/opt/homebrew/lib/node_modules/@earendil-works/pi-coding-agent/docs/{extensions,packages,settings,slash-commands,message-types}.md` and `dist/core/extensions/types.d.ts`.
-- **Code to port from `<hdr-mcp-checkout>`:** `mcp/herdr_mcp.py` (`clean_name`, `CONTROLS`, `short_name`, `validate_message`, `TERMINAL_CONTROLS`, send footer wording) and `extensions/herdr.ts` (`before_agent_start` hidden context, `createMentionProvider`).
+- **Code to port from the `hdr-mcp` checkout:** `mcp/herdr_mcp.py` (`clean_name`, `CONTROLS`, `short_name`, `validate_message`, `TERMINAL_CONTROLS`, send footer wording) and `extensions/herdr.ts` (`before_agent_start` hidden context, `createMentionProvider`).

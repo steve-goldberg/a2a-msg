@@ -2,7 +2,9 @@
 
 ## Symptom and scope
 
-Pi `/msg` in `wDemo` reported “No live Claude peers in this Herdr workspace” despite example-peer (`wDemo:p4`) being alive. The handoff found a live Claude inbox helper with an unlinked listener pathname and no registry record. Discovery already rescans on every call: a late-start control passed before any runtime changes.
+Live workspace, pane and session identifiers below are anonymized.
+
+Pi `/msg` in `wDemo` reported “No live Claude peers in this Herdr workspace” despite a live Claude pane (`wDemo:p4`). The handoff found a live Claude inbox helper with an unlinked listener pathname and no registry record. Discovery already rescans on every call: a late-start control passed before any runtime changes.
 
 The globally installed Claude mods watch this repository. Editing their sources hot-reloaded existing sessions, including sessions outside the development workspace. No prompts were sent to those sessions, and none were quit or resumed as part of verification.
 
@@ -15,7 +17,7 @@ Before the fixes:
 - `claude plugin test claude/a2a-msg` failed **resume and clear keep the process inbox registered**: `resume` deleted the files even though the process and detached helper can continue.
 - After the user observed the live “belongs to the agent that started this process” notice, a regression with an existing owner and missing session state failed **reload after conversation state is lost does not reject the original process owner**. The generated API documents `$.state` as session-scoped, not process-scoped. An owner set in the environment survives conversation changes; its state counterpart need not.
 
-These mechanisms are established independently. There is no retained trace proving which cleanup first removed example-peer's original socket; do not claim the historical deletion trigger is known.
+These mechanisms are established independently. There is no retained trace proving which cleanup first removed the peer's original socket; do not claim the historical deletion trigger is known.
 
 ## Fix and invariants
 
@@ -47,10 +49,10 @@ Final results: **34 Node tests and 7 Claude plugin tests passed**; all three str
 
 Regression coverage includes real Unix sockets, real helper subprocesses, late peers, failed startup probes, old/new generation cleanup, lost-path automatic recovery, dead-owner cleanup, workspace isolation, owner migration and the nested-process guard. Claude plugin tests mock host nouns; they are not substitutes for live checks.
 
-A read-only live check after hot reload found example-peer's record restored, `GET /ping` returned `200 {"v":1,"kind":"claude","pane":"wDemo:p4"}`, and the actual Pi `/msg` handler returned:
+A read-only live check after hot reload found the peer's record restored, `GET /ping` returned `200 {"v":1,"kind":"claude","pane":"wDemo:p4"}`, and the actual Pi `/msg` handler returned (identifiers anonymized):
 
 ```text
 example-session  Claude · wDemo:p4
 ```
 
-The harness dispatched no session lifecycle events, opened no inbox in the user's pane, returned no picker selection, and sent no message. Recovery did not require quitting or resuming example-peer. The user's interactive picker and message delivery to example-peer were deliberately not driven by the agent; the user can confirm `/msg` themselves.
+The harness dispatched no session lifecycle events, opened no inbox in the user's pane, returned no picker selection, and sent no message. Recovery did not require quitting or resuming the Claude peer. The user's interactive picker and message delivery to that peer were deliberately not driven by the agent; the user can confirm `/msg` themselves.
