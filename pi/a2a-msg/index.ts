@@ -3,13 +3,13 @@
 // - /msg picks a Claude peer and inserts `@cld-<name>` (the bridge); `@` completes Pi peers (`@pi-<name>`).
 // - On submit, each mentioned live peer is described to the model, which writes the message
 //   and sends it with the send_message tool (a POST to the peer's socket).
-// - An in-process inbox on this pane's socket turns each received message into a turn,
-//   shown as one compact `↘ @token: …` row that expands.
+// - An in-process inbox records each receipt as a compact `↘ @token: …` row immediately,
+//   independently of when the steered model message can run.
 import { execFile } from "node:child_process"
 import { randomUUID } from "node:crypto"
 import fs from "node:fs"
 import http from "node:http"
-import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent"
+import type { ExtensionAPI, ExtensionContext, Theme } from "@earendil-works/pi-coding-agent"
 import { Box, Text, type AutocompleteItem, type AutocompleteProvider } from "@earendil-works/pi-tui"
 import { Type } from "typebox"
 import {
@@ -24,6 +24,17 @@ const PING_MS = 1500
 const SEND_MS = 10_000
 type Details = { token: string; from: Message["from"]; text: string; id: string }
 type Scan = { peers: Peer[]; myName: string }
+
+/** Shared by immediate receipt entries and legacy displayed custom messages. */
+function inboxRow(d: Details | undefined, expanded: boolean, outputPad: number, theme: Theme) {
+  if (!d) return undefined
+  const box = new Box(outputPad, 0, text => theme.bg("customMessageBg", text))
+  const head = theme.fg("customMessageLabel", `↘ @${d.token}`)
+  box.addChild(new Text(expanded
+    ? `${head}${theme.fg("dim", ` · ${d.from.pane}`)}\n${theme.fg("customMessageText", d.text)}`
+    : `${head}${theme.fg("customMessageText", compactLine(d.token, d.text).slice(`↘ @${d.token}`.length))}`, 0, 0))
+  return box
+}
 
 /** One HTTP request over a Unix socket, no connection reuse. */
 function request(sock: string, method: string, path: string, body: string | undefined, timeoutMs: number) {
@@ -165,7 +176,11 @@ export default function a2aMsg(pi: ExtensionAPI) {
 
   const deliver = (m: Message) => {
     const token = baseToken(m.from.kind, m.from.name, m.from.pane)
-    pi.sendMessage<Details>({ customType: "a2a-msg", content: inboundText(m, SEND_WITH), display: true, details: { token, from: m.from, text: m.text, id: m.id } },
+    const details: Details = { token, from: m.from, text: m.text, id: m.id }
+    // A streamed custom message emits no UI event until the current tool finishes. Store
+    // the receipt now; keep the single steered model message hidden to avoid a second row.
+    pi.appendEntry<Details>("a2a-msg", details)
+    pi.sendMessage<Details>({ customType: "a2a-msg", content: inboundText(m, SEND_WITH), display: false, details },
       { triggerTurn: true, deliverAs: "steer" })
   }
 
@@ -197,16 +212,11 @@ export default function a2aMsg(pi: ExtensionAPI) {
   pi.on("session_info_changed", () => { if (server) writeRecord() })
   pi.on("session_shutdown", () => stop())
 
-  pi.registerMessageRenderer<Details>("a2a-msg", (message, { expanded, outputPad }, theme) => {
-    const d = message.details
-    if (!d) return undefined
-    const box = new Box(outputPad, 0, t => theme.bg("customMessageBg", t))
-    const head = theme.fg("customMessageLabel", `↘ @${d.token}`)
-    box.addChild(new Text(expanded
-      ? `${head}${theme.fg("dim", ` · ${d.from.pane}`)}\n${theme.fg("customMessageText", d.text)}`
-      : `${head}${theme.fg("customMessageText", compactLine(d.token, d.text).slice(`↘ @${d.token}`.length))}`, 0, 0))
-    return box
-  })
+  pi.registerEntryRenderer<Details>("a2a-msg", (entry, { expanded }, theme) =>
+    inboxRow(entry.data, expanded, pi.getSettings().outputPad ?? 1, theme))
+  // Existing sessions still contain displayed custom messages from older versions.
+  pi.registerMessageRenderer<Details>("a2a-msg", (message, { expanded, outputPad }, theme) =>
+    inboxRow(message.details, expanded, outputPad, theme))
 
   pi.registerCommand("msg", {
     description: "Message a Claude peer in this Herdr workspace",

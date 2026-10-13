@@ -1,6 +1,6 @@
 {
   "name": "a2a-msg",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Pi side of a2a-msg: /msg to Claude peers, @ completion for Pi peers, send_message, a Unix-socket inbox",
   "type": "module",

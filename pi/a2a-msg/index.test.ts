@@ -5,6 +5,7 @@ import fs from "node:fs"
 import http from "node:http"
 import { after, before, mock, test } from "node:test"
 import { EventEmitter } from "node:events"
+import { AgentSession } from "@earendil-works/pi-coding-agent"
 import { makeRecord, messageBody, paths, type Message } from "../../claude/a2a-msg/hooks/core.ts"
 import { listen, type Inbox } from "../../claude/a2a-msg/inbox.ts"
 import a2aMsg from "./index.ts"
@@ -31,6 +32,8 @@ function fakePi(session = "") {
   const commands: Record<string, any> = {}
   const tools: Record<string, any> = {}
   const renderers: Record<string, any> = {}
+  const entryRenderers: Record<string, any> = {}
+  const entries: any[] = []
   const sent: any[] = []
   let name = session
   const pi = {
@@ -38,11 +41,14 @@ function fakePi(session = "") {
     registerCommand: (n: string, c: any) => { commands[n] = c },
     registerTool: (t: any) => { tools[t.name] = t },
     registerMessageRenderer: (t: string, r: Function) => { renderers[t] = r },
+    registerEntryRenderer: (t: string, r: Function) => { entryRenderers[t] = r },
+    appendEntry: (customType: string, data: any) => entries.push({ type: "custom", customType, data }),
     sendMessage: (m: any, o: any) => sent.push([m, o]),
     getSessionName: () => name || undefined,
+    getSettings: () => ({ outputPad: 0 }),
   }
   const rename = (n: string) => { name = n }
-  return { pi: pi as any, handlers, commands, tools, renderers, sent, rename }
+  return { pi: pi as any, handlers, commands, tools, renderers, entryRenderers, entries, sent, rename }
 }
 
 function fakeCtx(pick?: (rows: string[]) => string | undefined) {
@@ -187,6 +193,39 @@ test("an old Pi runtime shutting down leaves its replacement discoverable and re
   } finally {
     await old.handlers.session_shutdown({ reason: "quit" })
     await replacement.handlers.session_shutdown({ reason: "quit" })
+    delete process.env.A2A_MSG_OWNER
+  }
+})
+
+test("a receipt is visible while the real SDK still queues its model message behind a tool", async () => {
+  const { pi, handlers, entryRenderers, entries, sent } = fakePi()
+  const queued: any[] = []
+  const sends: Promise<void>[] = []
+  // The SDK's actual streaming branch queues a custom steer without emitting message_start.
+  // No provider, model call or live agent is involved; leave that queue unconsumed.
+  const sdk = { isStreaming: true, agent: { steer: (message: any) => queued.push(message) } }
+  pi.sendMessage = (message: any, options: any) => {
+    sent.push([message, options])
+    sends.push(AgentSession.prototype.sendCustomMessage.call(sdk as any, message, options))
+  }
+  a2aMsg(pi)
+  try {
+    await handlers.session_start({}, fakeCtx().ctx)
+    const body = messageBody({ kind: "claude", pane: "w1:p3", name: "lead" }, "queued receipt\nsecond line", "busy-receipt")
+    assert.equal((await post(paths(ROOT, ME).sock, "/msg", body)).status, 200)
+    await Promise.all(sends)
+    assert.equal(queued.length, 1, "the model should still have one queued steer")
+    assert.equal(entries.length, 1, "the receipt must already be stored and renderable while the tool runs")
+    assert.equal(sent.length, 1)
+    assert.equal(queued[0].display, false, "consuming the steer must not add a duplicate receipt row")
+    assert.deepEqual(sent[0][1], { triggerTurn: true, deliverAs: "steer" })
+    const theme = { fg: (_c: string, text: string) => text, bg: (_c: string, text: string) => text }
+    const draw = (expanded: boolean) => entryRenderers["a2a-msg"](entries[0], { expanded }, theme).render(80)
+      .map((line: string) => line.trimEnd()).filter(Boolean)
+    assert.deepEqual(draw(false), ["↘ @cld-lead: queued receipt…"])
+    assert.deepEqual(draw(true), ["↘ @cld-lead · w1:p3", "queued receipt", "second line"])
+  } finally {
+    await handlers.session_shutdown({ reason: "quit" })
     delete process.env.A2A_MSG_OWNER
   }
 })
